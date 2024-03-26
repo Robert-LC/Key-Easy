@@ -1,4 +1,4 @@
-import Piano from '../_components/Piano/Piano'
+import Piano from '../components/Piano/Piano'
 import { notes } from '../components/Piano/NoteType'
 
 const Home = () => {

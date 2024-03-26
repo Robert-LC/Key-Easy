@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "../.."
+		}
+	],
+	"settings": {
+		"tailwindCSS.includeLanguages": {
+			"javascript": "javascript",
+			"html": "HTML"
+		},
+		"editor.quickSuggestions": {
+			"strings": true
+		}
+	}
+}
