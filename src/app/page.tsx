@@ -1,5 +1,5 @@
 import Piano from '../_components/Piano/Piano'
-import { notes } from '../_components/Piano/NoteType'
+import { notes } from '../components/Piano/NoteType'
 
 const Home = () => {
   return <Piano notes={notes} />
