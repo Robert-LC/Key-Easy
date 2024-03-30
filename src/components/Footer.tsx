@@ -5,7 +5,7 @@ const Footer: React.FC = () => {
     <div className='flex justify-between border-t-8  text-white p-6'>
       <h3>KeyEasy by Robert LoCicero</h3>
       <h3>
-        <a href='https://github.com/Robert-LC/KeyEasy' target='_blank' rel='noopener noreferrer'>
+        <a href='https://github.com/Robert-LC/Key-Easy' target='_blank' rel='noopener noreferrer'>
           GitHub
         </a>
       </h3>
