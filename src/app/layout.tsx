@@ -21,7 +21,7 @@ const RootLayout = ({
     <html lang='en'>
       <body className={(inter.className, 'flex flex-col justify-between h-screen')}>
         <Navbar />
-        <main>{children}</main>
+        <main className='flex-grow'>{children}</main>
         <Footer />
       </body>
     </html>

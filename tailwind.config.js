@@ -6,6 +6,9 @@ module.exports = {
       fontFamily: {
         satoshi: ['Satoshi', 'sans-serif'],
         inter: ['Inter', 'sans-serif']
+      },
+      colors: {
+        'menu-blue': '#16252e'
       }
     }
   },

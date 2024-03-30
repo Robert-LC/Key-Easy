@@ -9,7 +9,7 @@ type Props = {
 }
 
 const Piano: React.FC<Props> = ({ notes }) => (
-  <div className='flex items-center justify-center w-full h-full'>
+  <div className='flex items-center justify-center w-full h-full mb-10'>
     <div>
       {notes.map((element: NoteType) => (
         <PianoKey key={element.note} note={element.note} color={element.color} />

@@ -7,7 +7,7 @@ import { notes } from '../components/Piano/NoteType'
 const Home = () => {
   return (
     <GameProvider>
-      <div>
+      <div className='flex flex-col h-full'>
         <GameInfo score={0} scaleName='Major' showNoteNames={true} triesLeft={3} />
         <Piano notes={notes} />
       </div>

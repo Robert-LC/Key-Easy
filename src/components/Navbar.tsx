@@ -19,14 +19,18 @@ const Navbar = () => {
   // }, [])
 
   return (
-    <nav className='flex-between w-full shadow-xl h-16 p-6'>
+    <nav className='flex-between w-full shadow-xl h-16 p-6 bg-menu-blue'>
       {isUserLoggedIn ? (
         <>
           <div className='flex gap-3'>
-            <Link href='/profile'>Profile</Link>
-            <Link href='/settings'>Settings</Link>
+            <Link href='/profile' className='white_btn'>
+              Profile
+            </Link>
+            <Link href='/settings' className='white_btn'>
+              Settings
+            </Link>
           </div>
-          <button type='button' className='black_btn'>
+          <button type='button' className='white_btn'>
             Sign Out
           </button>
         </>
