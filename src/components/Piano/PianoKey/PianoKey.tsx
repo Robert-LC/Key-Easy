@@ -1,9 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { Note } from '@/types/Note'
+
 type Props = {
-  note: string
-  color: string
+  note: Note
 }
 
 const BlackKey = styled.button`
@@ -18,7 +19,6 @@ const BlackKey = styled.button`
     background: #333;
   }
 `
-
 const WhiteKey = styled.button`
   width: 120px;
   height: 400px;
@@ -32,7 +32,8 @@ const WhiteKey = styled.button`
   }
 `
 
-const PianoKey: React.FC<Props> = ({ note, color }) =>
-  color === 'white' ? <WhiteKey value={note} /> : <BlackKey value={note} />
+const PianoKey: React.FC<Props> = ({ note }) => {
+  return note.accidentalType === 'Natural' ? <WhiteKey /> : <BlackKey />
+}
 
 export default PianoKey

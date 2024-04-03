@@ -15,6 +15,7 @@ interface GameAction {
   type: 'SET_MODE' | 'INCREMENT_SCORE' | 'NEXT_NOTE' | 'NEXT_SCALE' | 'RESET_SCORE'
   payload?: unknown | undefined
 }
+
 const initialState: GameState = {
   score: 0,
   scale: [],

@@ -3,11 +3,10 @@ import React from 'react'
 type Props = {
   score: number
   scaleName: string
-  showNoteNames: boolean
   triesLeft: number
 }
 
-const GameInfo: React.FC<Props> = ({ score, scaleName, showNoteNames, triesLeft }) => {
+const GameInfo: React.FC<Props> = ({ score, scaleName, triesLeft }) => {
   return (
     <div
       className='flex justify-evenly bg-menu-blue p-6 m-6'
@@ -25,12 +24,7 @@ const GameInfo: React.FC<Props> = ({ score, scaleName, showNoteNames, triesLeft 
           <label htmlFor='noteNamesToggle' className='text-white font-bold text-2xl'>
             Show Note Names:
           </label>
-          <input
-            type='checkbox'
-            id='noteNamesToggle'
-            className='w-6 ml-2'
-            checked={showNoteNames}
-          />
+          <input type='checkbox' id='noteNamesToggle' className='w-6 ml-2' />
         </div>
         <h1>Tries Left: {triesLeft}</h1>
       </div>
