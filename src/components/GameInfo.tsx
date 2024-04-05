@@ -1,4 +1,7 @@
+'use client'
 import React from 'react'
+
+import { GameContext } from '@/contexts/GameContext'
 
 type Props = {
   score: number
@@ -7,6 +10,8 @@ type Props = {
 }
 
 const GameInfo: React.FC<Props> = ({ score, scaleName, triesLeft }) => {
+  const { dispatch } = React.useContext(GameContext) || {}
+
   return (
     <div
       className='flex justify-evenly bg-menu-blue p-6 m-6'
@@ -24,7 +29,14 @@ const GameInfo: React.FC<Props> = ({ score, scaleName, triesLeft }) => {
           <label htmlFor='noteNamesToggle' className='text-white font-bold text-2xl'>
             Show Note Names:
           </label>
-          <input type='checkbox' id='noteNamesToggle' className='w-6 ml-2' />
+          <input
+            type='checkbox'
+            id='noteNamesToggle'
+            className='w-6 ml-2'
+            onChange={(e) =>
+              dispatch && dispatch({ type: 'SHOW_NOTE_NAMES', payload: e.target.checked })
+            }
+          />
         </div>
         <h1>Tries Left: {triesLeft}</h1>
       </div>

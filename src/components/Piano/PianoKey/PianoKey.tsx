@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 
 import { Note } from '@/types/Note'
+import { GameContext } from '@/contexts/GameContext'
 
 type Props = {
   note: Note
@@ -15,6 +16,15 @@ const BlackKey = styled.button`
   margin-left: -40px;
   background: black;
 
+  color: white;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 40px;
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-content: flex-end;
+  justify-content: center;
+
   :active {
     background: #333;
   }
@@ -27,13 +37,27 @@ const WhiteKey = styled.button`
   border: 1px solid black;
   box-shadow: 2px 5px;
 
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 40px;
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-content: flex-end;
+  justify-content: center;
+
   :active {
     background: #ccc;
   }
 `
 
 const PianoKey: React.FC<Props> = ({ note }) => {
-  return note.accidentalType === 'Natural' ? <WhiteKey /> : <BlackKey />
+  const context = useContext(GameContext)
+
+  return note.accidental === '' ? (
+    <WhiteKey> {context?.state.showNoteNames && note.nameNoOctave} </WhiteKey>
+  ) : (
+    <BlackKey> {context?.state.showNoteNames && note.nameNoOctave} </BlackKey>
+  )
 }
 
 export default PianoKey

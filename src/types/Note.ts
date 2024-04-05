@@ -1,6 +1,7 @@
 export type Note = {
-  name: string
+  fullName: string
+  nameNoOctave: string
   letter: string
   octave: number
-  accidentalType: 'Sharp' | 'Flat' | 'Natural'
+  accidental: string
 }

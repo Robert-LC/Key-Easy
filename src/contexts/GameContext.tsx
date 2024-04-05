@@ -7,12 +7,19 @@ interface IProps {
 interface GameState {
   score: number
   scale: string[]
+  showNoteNames: boolean
   note: string
   mode: 'Major' | 'Minor' | 'Both'
 }
 
 interface GameAction {
-  type: 'SET_MODE' | 'INCREMENT_SCORE' | 'NEXT_NOTE' | 'NEXT_SCALE' | 'RESET_SCORE'
+  type:
+    | 'SET_MODE'
+    | 'INCREMENT_SCORE'
+    | 'NEXT_NOTE'
+    | 'NEXT_SCALE'
+    | 'RESET_SCORE'
+    | 'SHOW_NOTE_NAMES'
   payload?: unknown | undefined
 }
 
@@ -20,9 +27,10 @@ const initialState: GameState = {
   score: 0,
   scale: [],
   note: '',
-  mode: 'Major'
+  mode: 'Major',
+  showNoteNames: false
 }
-const GameContext = createContext<
+export const GameContext = createContext<
   { state: GameState; dispatch: React.Dispatch<GameAction> } | undefined
 >(undefined)
 
@@ -38,6 +46,8 @@ const gameReducer = (state: GameState, action: GameAction) => {
       return { ...state, scale: action.payload as string[] }
     case 'RESET_SCORE':
       return { ...state, score: 0 }
+    case 'SHOW_NOTE_NAMES':
+      return { ...state, showNoteNames: action.payload as boolean }
     default:
       return state
   }
