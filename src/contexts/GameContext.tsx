@@ -1,15 +1,21 @@
 'use client'
 import React, { createContext, useReducer } from 'react'
+
+import { ScaleMode } from '@/types/Enums'
+
 interface IProps {
   children: React.ReactNode
 }
 
 interface GameState {
+  currentNote: string
+  currentScale: string[]
+  mode: ScaleMode
+  nextNote: string
+  nextScale: string[]
   score: number
-  scale: string[]
   showNoteNames: boolean
-  note: string
-  mode: 'Major' | 'Minor' | 'Both'
+  triesLeft: number
 }
 
 interface GameAction {
@@ -23,12 +29,18 @@ interface GameAction {
   payload?: unknown | undefined
 }
 
+const STARTING_TRIES = 3
+const STARTING_SCORE = 0
+
 const initialState: GameState = {
-  score: 0,
-  scale: [],
-  note: '',
-  mode: 'Major',
-  showNoteNames: false
+  currentScale: [],
+  currentNote: '',
+  mode: ScaleMode.Major,
+  nextNote: '',
+  nextScale: [],
+  score: STARTING_SCORE,
+  showNoteNames: false,
+  triesLeft: STARTING_TRIES
 }
 export const GameContext = createContext<
   { state: GameState; dispatch: React.Dispatch<GameAction> } | undefined
@@ -37,7 +49,7 @@ export const GameContext = createContext<
 const gameReducer = (state: GameState, action: GameAction) => {
   switch (action.type) {
     case 'SET_MODE':
-      return { ...state, mode: action.payload as 'Major' | 'Minor' | 'Both' }
+      return { ...state, mode: action.payload as ScaleMode }
     case 'INCREMENT_SCORE':
       return { ...state, score: state.score + 1 }
     case 'NEXT_NOTE':
