@@ -27,8 +27,8 @@ const createNotes = (): Note[] => {
 const Piano = () => {
   const notes = createNotes()
   return (
-    <div className='flex items-center justify-center w-full h-full mb-10'>
-      <div className='min-h-[410px]'>
+    <div className='flex items-center justify-center h-full w-full mb-10'>
+      <div className='min-h-[410px] max-h-[410px]'>
         {notes.map((element: Note) => (
           <PianoKey key={element.fullName} note={element} />
         ))}

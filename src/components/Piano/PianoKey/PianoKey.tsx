@@ -9,7 +9,7 @@ type Props = {
 }
 
 const BlackKey = styled.button`
-  width: 80px;
+  width: 78px;
   height: 260px;
   position: absolute;
   margin: 1px;
@@ -30,7 +30,7 @@ const BlackKey = styled.button`
   }
 `
 const WhiteKey = styled.button`
-  width: 120px;
+  width: 110px;
   height: 400px;
   margin: 1px;
   background: #ededed;
