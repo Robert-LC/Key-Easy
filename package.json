@@ -9,7 +9,8 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --quiet",
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --quiet --fix",
     "format": "prettier --write '*/**/*.{js,jsx,ts,tsx,json,css,md}'",
-    "prepare": "husky"
+    "prepare": "husky",
+    "test": "jest --watchAll"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
