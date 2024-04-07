@@ -8,11 +8,9 @@ interface IProps {
 }
 
 interface GameState {
-  currentNote: string
-  currentScale: string[]
+  notes?: string[]
+  scales?: Scale[]
   mode: ScaleMode
-  nextNote: string
-  nextScale: string[]
   score: number
   showNoteNames: boolean
   triesLeft: number
@@ -33,15 +31,14 @@ const STARTING_TRIES = 3
 const STARTING_SCORE = 0
 
 const initialState: GameState = {
-  currentScale: [],
-  currentNote: '',
+  scales: undefined,
+  notes: undefined,
   mode: ScaleMode.Major,
-  nextNote: '',
-  nextScale: [],
   score: STARTING_SCORE,
   showNoteNames: false,
   triesLeft: STARTING_TRIES
 }
+
 export const GameContext = createContext<
   { state: GameState; dispatch: React.Dispatch<GameAction> } | undefined
 >(undefined)
