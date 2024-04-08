@@ -3,14 +3,11 @@ import React from 'react'
 
 import { GameContext } from '@/contexts/GameContext'
 
-type Props = {
-  score: number
-  scaleName: string
-  triesLeft: number
-}
-
-const GameInfo: React.FC<Props> = ({ score, scaleName, triesLeft }) => {
-  const { dispatch } = React.useContext(GameContext) || {}
+const GameInfo = () => {
+  const { state, dispatch } = React.useContext(GameContext) || {}
+  const currentScale = state?.scales[state.scales.length - 1]
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const currentNote = state?.notes[0]
 
   return (
     <div
@@ -19,9 +16,9 @@ const GameInfo: React.FC<Props> = ({ score, scaleName, triesLeft }) => {
     >
       <div className='space-y-3'>
         <h1>
-          Current Scale: <span className='text-orange-400'>{scaleName}</span>
+          Current Scale: <span className='text-orange-400'>{currentScale?.name}</span>
         </h1>
-        <h1>Score: {score}</h1>
+        <h1>Score: {state?.score}</h1>
       </div>
 
       <div className='space-y-3'>
@@ -38,7 +35,7 @@ const GameInfo: React.FC<Props> = ({ score, scaleName, triesLeft }) => {
             }
           />
         </div>
-        <h1>Tries Left: {triesLeft}</h1>
+        <h1>Tries Left: {state?.triesLeft}</h1>
       </div>
     </div>
   )

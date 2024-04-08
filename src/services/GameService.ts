@@ -8,8 +8,7 @@ import { Scale } from '@/types/Scale'
  * @param notes - The array of notes.
  * @returns The next note, or `undefined` if there are no more notes.
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const getNextNote = (notes: Note[]): void | Note => {
+export const getNextNote = (notes: Note[]): void | Note => {
   // queue implentation, because we need FIFO and need to track current and next notes in one place
   const nextNote = notes.shift()
 
@@ -27,8 +26,7 @@ const getNextNote = (notes: Note[]): void | Note => {
  * @param scales - An array of scales.
  * @returns The next scale from the array, or `undefined` if there are no more scales.
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const getNextScale = (scales: Scale[]): void | Scale => {
+export const getNextScale = (scales: Scale[]): void | Scale => {
   const nextScale = scales.pop()
 
   if (!nextScale) {

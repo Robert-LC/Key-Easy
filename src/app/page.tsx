@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <GameProvider>
       <div className='flex flex-col h-full'>
-        <GameInfo score={0} scaleName='Major' triesLeft={3} />
+        <GameInfo />
         <Piano />
       </div>
     </GameProvider>
