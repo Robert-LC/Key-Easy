@@ -1,5 +1,8 @@
+import { ScaleMode } from '@/types/Enums'
 import { Note } from '@/types/Note'
 import { Scale } from '@/types/Scale'
+import { getRandomScale } from '@/utils/GameUtils'
+import { GameState } from '@/contexts/GameContext'
 
 /**
  * Retrieves the next note from the given array of notes.
@@ -34,6 +37,36 @@ export const getNextScale = (scales: Scale[]): void | Scale => {
   }
 
   return nextScale
+}
+
+export const generateInitialGameState = (): GameState => {
+  const scales = createScalesStack(ScaleMode.Major, 5)
+  const notes = createNotesQueue(scales[0])
+
+  return {
+    scales,
+    notes,
+    mode: ScaleMode.Major,
+    score: 0,
+    showNoteNames: false,
+    triesLeft: 3
+  }
+}
+
+// Helper functions
+
+const createScalesStack = (mode: ScaleMode, amount: number): Scale[] => {
+  const scales = []
+
+  for (let i = 0; i < amount; i++) {
+    scales.push(getRandomScale(mode))
+  }
+
+  return scales
+}
+
+const createNotesQueue = (scale: Scale): Note[] => {
+  return scale.notes
 }
 
 // const endGame() => {

@@ -15,9 +15,9 @@ const ENDING_NOTE = 'B4'
  * @param currentScale - The current scale to compare against.
  * @returns A randomly generated scale.
  */
-export const randomScale = (mode: ScaleMode, currentScale?: Scale): Scale => {
+export const getRandomScale = (mode: ScaleMode, currentScale?: Scale): Scale => {
   const scale = createScaleFromTonal(
-    `${randomNoteName()} ${mode === ScaleMode.Both ? randomMode() : mode.toLowerCase()}`
+    `${getRandomNoteName()} ${mode === ScaleMode.Both ? getRandomMode() : mode.toLowerCase()}`
   )
 
   if (!currentScale) {
@@ -25,7 +25,7 @@ export const randomScale = (mode: ScaleMode, currentScale?: Scale): Scale => {
   }
 
   while (currentScale === scale) {
-    randomScale(mode, currentScale)
+    getRandomScale(mode, currentScale)
   }
 
   return scale
@@ -35,7 +35,7 @@ export const randomScale = (mode: ScaleMode, currentScale?: Scale): Scale => {
  * Generates a random music mode.
  * @returns {string} The randomly generated music mode.
  */
-const randomMode = (): string => {
+const getRandomMode = (): string => {
   const modes = ['major', 'minor']
   return modes[Math.floor(Math.random() * modes.length)]
 }
@@ -44,7 +44,7 @@ const randomMode = (): string => {
  * Generates a random note name.
  * @returns A string representing a random note name.
  */
-const randomNoteName = (): string => {
+const getRandomNoteName = (): string => {
   const range = Range.chromatic([STARTING_NOTE, ENDING_NOTE])
   const notes = range.map((note) => stripOctave(note))
   return notes[Math.floor(Math.random() * notes.length)]
