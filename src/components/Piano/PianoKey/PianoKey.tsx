@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import { Note } from '@/types/Note'
 import { GameContext } from '@/contexts/GameContext'
+import { playSound } from '@/services/SoundService'
 
 type Props = {
   note: Note
@@ -55,10 +56,14 @@ const WhiteKey = styled.button`
 const PianoKey: React.FC<Props> = ({ note }) => {
   const context = useContext(GameContext)
 
+  const handleClick = () => {
+    playSound(note.fullName, 0.5)
+  }
+
   return note.accidental === '' ? (
-    <WhiteKey> {context?.state.showNoteNames && note.nameNoOctave} </WhiteKey>
+    <WhiteKey onClick={handleClick}> {context?.state.showNoteNames && note.nameNoOctave} </WhiteKey>
   ) : (
-    <BlackKey> {context?.state.showNoteNames && note.nameNoOctave} </BlackKey>
+    <BlackKey onClick={handleClick}> {context?.state.showNoteNames && note.nameNoOctave} </BlackKey>
   )
 }
 
