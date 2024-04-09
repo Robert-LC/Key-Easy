@@ -15,6 +15,7 @@ const BlackKey = styled.button`
   margin: 1px;
   margin-left: -40px;
   background: black;
+  z-index: 2;
 
   color: white;
   font-family: sans-serif;
@@ -25,8 +26,8 @@ const BlackKey = styled.button`
   align-content: flex-end;
   justify-content: center;
 
-  :active {
-    background: #333;
+  &:hover {
+    filter: brightness(85%);
   }
 `
 const WhiteKey = styled.button`
@@ -36,6 +37,7 @@ const WhiteKey = styled.button`
   background: #ededed;
   border: 1px solid black;
   box-shadow: 2px 5px;
+  z-index: 1;
 
   font-family: sans-serif;
   font-weight: bold;
@@ -45,8 +47,8 @@ const WhiteKey = styled.button`
   align-content: flex-end;
   justify-content: center;
 
-  :active {
-    background: #ccc;
+  &:hover {
+    filter: brightness(90%);
   }
 `
 
