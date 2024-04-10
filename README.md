@@ -25,7 +25,11 @@ Try it [here!](https://key-easy.netlify.app/)
 
 - [Jest](https://jestjs.io/) we can't forget about testing... Jest was instrumental in helping me make sure my code was always functional when making big changes, and its easy to read and apply syntax made writing tests easy.
 
-- [Tailwind](https://tailwindcss.com/) I'm a developer not a designer, so having quick out of the box styles from Tailwind, let me focus on the app itself, and less time dealing with styling and CSS.
+- [Eslint](https://eslint.org/) and [Prettier](https://prettier.io/) keeps the code style consistent accross the board.
+
+- [Husky](https://github.com/typicode/husky) Automation on Git commit, to automatically lint code, commit messages, and other git hooks to make sure a commit doesn't go out without meeting quality requirments.
+
+- [Tailwind](https://tailwindcss.com/) I'm a developer not a designer, so having quick out of the box styles from Tailwind, let me focus on the app itself, and less time dealing with styling and CSS, but it still looks pretty.
 
 - [Tonaljs](https://github.com/tonaljs/tonal) is a functional JS library, built with the purpose of bringing music theory to code. I used it to manipulate musical elements like notes, scales, and chords. All in abstractions (no music or sounds produced). While implementing it, I even made a few PRs of my own to help improve the usability of Tonal for everyone.
 
