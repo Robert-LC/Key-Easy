@@ -1,7 +1,9 @@
 'use client'
-import React, { createContext, useEffect, useReducer } from 'react'
+import React, { createContext, useEffect } from 'react'
+import { useImmerReducer } from 'use-immer'
+import { produce } from 'immer'
 
-import { generateInitialGameState, getNextNote, getNextScale } from '@/services/GameService'
+import { generateInitialGameState } from '@/services/GameService'
 import { ScaleMode } from '@/types/Enums'
 import { Scale } from '@/types/Scale'
 import { Note } from '@/types/Note'
@@ -11,8 +13,10 @@ interface Props {
 }
 
 export interface GameState {
-  notes: Note[] // Used as a queue
-  scales: Scale[] // Used as a stack
+  notes: Note[]
+  scales: Scale[]
+  currentNote?: Note
+  currentScale?: Scale
   mode: ScaleMode
   score: number
   showNoteNames: boolean
@@ -22,6 +26,8 @@ export interface GameState {
 const placeholderGameState: GameState = {
   notes: [],
   scales: [],
+  currentNote: undefined,
+  currentScale: undefined,
   mode: ScaleMode.Major,
   score: 0,
   showNoteNames: false,
@@ -31,13 +37,13 @@ const placeholderGameState: GameState = {
 interface GameAction {
   type:
     | 'SET_MODE'
-    | 'SET_SCALE'
     | 'INCREMENT_SCORE'
     | 'INCREMENT_NOTE'
     | 'INCREMENT_SCALE'
     | 'INITIALIZE_GAME'
     | 'RESET_SCORE'
     | 'SHOW_NOTE_NAMES'
+    | 'CHECK_NOTE_ANSWER'
   payload?: unknown | undefined
 }
 
@@ -45,34 +51,32 @@ export const GameContext = createContext<
   { state: GameState; dispatch: React.Dispatch<GameAction> } | undefined
 >(undefined)
 
-const gameReducer = (state: GameState, action: GameAction) => {
+const gameReducer = produce((draft: GameState, action: GameAction) => {
   switch (action.type) {
     case 'SET_MODE':
-      return { ...state, mode: action.payload as ScaleMode }
-    case 'SET_SCALE':
-      return { ...state, scale: action.payload as Scale }
+      draft.mode = action.payload as ScaleMode
+      break
     case 'INCREMENT_SCORE':
-      return { ...state, score: state.score + 1 }
+      draft.score += 1
+      break
     case 'INCREMENT_NOTE':
-      const note = getNextNote(state.notes)
-      return { ...state, note: note }
+      draft.currentNote = draft.notes.shift()
+      break
     case 'INCREMENT_SCALE':
-      const scale = getNextScale(state.scales)
-      return { ...state, scale: scale }
+      draft.currentScale = draft.scales.pop()
     case 'INITIALIZE_GAME':
       return action.payload as GameState
-    case 'RESET_SCORE':
-      return { ...state, score: 0 }
     case 'SHOW_NOTE_NAMES':
-      return { ...state, showNoteNames: action.payload as boolean }
+      draft.showNoteNames = action.payload as boolean
+      break
     default:
-      return state
+      break
   }
-}
+})
 
 export const GameProvider = (props: Props) => {
   // Initialize with a placeholder state, to fix hydration errors that are caused by the randomness of the game
-  const [state, dispatch] = useReducer(gameReducer, placeholderGameState)
+  const [state, dispatch] = useImmerReducer(gameReducer, placeholderGameState)
 
   // Wait till the component is mounted, before generating the initial game state
   useEffect(() => {
