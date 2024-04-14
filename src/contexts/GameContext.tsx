@@ -1,9 +1,9 @@
 'use client'
-import React, { createContext, useEffect, useState } from 'react'
+import React, { createContext, useEffect, useRef, useState } from 'react'
 import { useImmerReducer } from 'use-immer'
 import { produce } from 'immer'
 
-import { generateInitialGameState, isNoteCorrect } from '@/services/GameService'
+import { generateInitialGameState } from '@/services/GameService'
 import { ScaleMode } from '@/types/Enums'
 import { Scale } from '@/types/Scale'
 import { Note } from '@/types/Note'
@@ -26,13 +26,14 @@ export interface GameState {
 
 interface GameAction {
   type:
+    | 'DECREMENT_TRIES_LEFT'
     | 'CHECK_NOTE_ANSWER'
     | 'SET_MODE'
     | 'INCREMENT_SCORE'
     | 'INCREMENT_NOTE'
     | 'INCREMENT_SCALE'
     | 'INITIALIZE_GAME'
-    | 'RESET_SCORE'
+    | 'RESET_TRIES_LEFT'
     | 'SHOW_NOTE_NAMES'
     | 'CHECK_NOTE_ANSWER'
   payload?: unknown | undefined
@@ -44,27 +45,8 @@ export const GameContext = createContext<
 
 const gameReducer = produce((draft: GameState, action: GameAction) => {
   switch (action.type) {
-    case 'CHECK_NOTE_ANSWER':
-      if (draft.notes.length === 0) {
-        draft.currentScale = draft.scales.pop()
-        // if currentScale is undefined, end game
-        if (draft.currentScale === undefined) {
-          //end game
-          return
-        }
-        break
-      }
-
-      if (draft.currentScale) {
-        draft.notes = draft.currentScale.notes
-
-        if (isNoteCorrect(action.payload as Note, draft)) {
-          draft.score += 1
-          draft.currentNote = draft.notes.shift()
-          return
-        }
-      }
-
+    case 'DECREMENT_TRIES_LEFT':
+      draft.triesLeft -= 1
       break
     case 'SET_MODE':
       draft.mode = action.payload as ScaleMode
@@ -79,6 +61,9 @@ const gameReducer = produce((draft: GameState, action: GameAction) => {
       draft.currentScale = draft.scales.pop()
     case 'INITIALIZE_GAME':
       return action.payload as GameState
+    case 'RESET_TRIES_LEFT':
+      draft.triesLeft = 3
+      break
     case 'SHOW_NOTE_NAMES':
       draft.showNoteNames = action.payload as boolean
       break
@@ -90,10 +75,14 @@ const gameReducer = produce((draft: GameState, action: GameAction) => {
 export const GameProvider = (props: Props) => {
   const [state, dispatch] = useImmerReducer(gameReducer, null as unknown as GameState)
   const [loading, setLoading] = useState(true)
+  const initialized = useRef(false)
 
   useEffect(() => {
-    dispatch({ type: 'INITIALIZE_GAME', payload: generateInitialGameState() })
-    setLoading(false)
+    if (!initialized.current) {
+      dispatch({ type: 'INITIALIZE_GAME', payload: generateInitialGameState() })
+      setLoading(false)
+      initialized.current = true
+    }
   }, [])
 
   if (loading) {

@@ -10,23 +10,14 @@ const STARTING_NOTE = 'C4'
 const ENDING_NOTE = 'B4'
 
 /**
- * Generates a random scale based on the given mode and ensures it is different from the current scale.
+ * Generates a random scale based on the given mode
  * @param mode - The mode of the scale (Major, Minor, or Both).
- * @param currentScale - The current scale to compare against.
  * @returns A randomly generated scale.
  */
-export const getRandomScale = (mode: ScaleMode, currentScale?: Scale): Scale => {
+export const getRandomScale = (mode: ScaleMode): Scale => {
   const scale = createScaleFromTonal(
     `${getRandomNoteName()} ${mode === ScaleMode.Both ? getRandomMode() : mode.toLowerCase()}`
   )
-
-  if (!currentScale) {
-    return scale
-  }
-
-  while (currentScale === scale) {
-    getRandomScale(mode, currentScale)
-  }
 
   return scale
 }
