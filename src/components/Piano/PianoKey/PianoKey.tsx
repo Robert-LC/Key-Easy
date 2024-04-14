@@ -7,18 +7,21 @@ import { playSound } from '@/services/SoundService'
 
 type Props = {
   note: Note
+  isBlack: boolean
 }
 
-const BlackKey = styled.button`
-  width: 78px;
-  height: 260px;
-  position: absolute;
+const Key = styled.button<Props>`
+  width: ${(props) => (props.isBlack ? '78px' : '110px')};
+  height: ${(props) => (props.isBlack ? '260px' : '400px')};
+  position: ${(props) => (props.isBlack ? 'absolute' : 'static')};
   margin: 1px;
-  margin-left: -40px;
-  background: black;
-  z-index: 2;
+  margin-left: ${(props) => (props.isBlack ? '-40px' : '0')};
+  z-index: ${(props) => (props.isBlack ? '2' : '1')};
+  border: ${(props) => (props.isBlack ? 'none' : '1px solid black')};
+  box-shadow: ${(props) => (props.isBlack ? 'none' : '2px 5px')};
+  background-color: ${(props) => (props.isBlack ? 'black' : '#ededed')};
 
-  color: white;
+  color: ${(props) => (props.isBlack ? 'white' : 'black')};
   font-family: sans-serif;
   font-weight: bold;
   font-size: 40px;
@@ -28,42 +31,24 @@ const BlackKey = styled.button`
   justify-content: center;
 
   &:hover {
-    filter: brightness(85%);
+    filter: ${(props) => (props.isBlack ? 'brightness(85%)' : 'brightness(90%)')};
   }
 `
-const WhiteKey = styled.button`
-  width: 110px;
-  height: 400px;
-  margin: 1px;
-  background: #ededed;
-  border: 1px solid black;
-  box-shadow: 2px 5px;
-  z-index: 1;
-
-  font-family: sans-serif;
-  font-weight: bold;
-  font-size: 40px;
-  display: inline-flex;
-  flex-wrap: wrap;
-  align-content: flex-end;
-  justify-content: center;
-
-  &:hover {
-    filter: brightness(90%);
-  }
-`
-
 const PianoKey: React.FC<Props> = ({ note }) => {
   const context = useContext(GameContext)
 
-  const handleClick = () => {
+  const handleClick = (note: Note) => {
     playSound(note.fullName, 0.5)
   }
 
   return note.accidental === '' ? (
-    <WhiteKey onClick={handleClick}> {context?.state.showNoteNames && note.nameNoOctave} </WhiteKey>
+    <Key note={note} isBlack={false} onClick={() => handleClick(note)}>
+      {state.showNoteNames && note.nameNoOctave}
+    </Key>
   ) : (
-    <BlackKey onClick={handleClick}> {context?.state.showNoteNames && note.nameNoOctave} </BlackKey>
+    <Key note={note} isBlack={true} onClick={() => handleClick(note)}>
+      {state.showNoteNames && note.nameNoOctave}
+    </Key>
   )
 }
 
