@@ -1,9 +1,9 @@
 'use client'
-import React, { createContext, useEffect } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 import { useImmerReducer } from 'use-immer'
 import { produce } from 'immer'
 
-import { generateInitialGameState } from '@/services/GameService'
+import { generateInitialGameState, isNoteCorrect } from '@/services/GameService'
 import { ScaleMode } from '@/types/Enums'
 import { Scale } from '@/types/Scale'
 import { Note } from '@/types/Note'
@@ -17,25 +17,16 @@ export interface GameState {
   scales: Scale[]
   currentNote?: Note
   currentScale?: Scale
+  isGameInProgress: boolean
   mode: ScaleMode
   score: number
   showNoteNames: boolean
   triesLeft: number
 }
 
-const placeholderGameState: GameState = {
-  notes: [],
-  scales: [],
-  currentNote: undefined,
-  currentScale: undefined,
-  mode: ScaleMode.Major,
-  score: 0,
-  showNoteNames: false,
-  triesLeft: 3
-}
-
 interface GameAction {
   type:
+    | 'CHECK_NOTE_ANSWER'
     | 'SET_MODE'
     | 'INCREMENT_SCORE'
     | 'INCREMENT_NOTE'
@@ -53,6 +44,28 @@ export const GameContext = createContext<
 
 const gameReducer = produce((draft: GameState, action: GameAction) => {
   switch (action.type) {
+    case 'CHECK_NOTE_ANSWER':
+      if (draft.notes.length === 0) {
+        draft.currentScale = draft.scales.pop()
+        // if currentScale is undefined, end game
+        if (draft.currentScale === undefined) {
+          //end game
+          return
+        }
+        break
+      }
+
+      if (draft.currentScale) {
+        draft.notes = draft.currentScale.notes
+
+        if (isNoteCorrect(action.payload as Note, draft)) {
+          draft.score += 1
+          draft.currentNote = draft.notes.shift()
+          return
+        }
+      }
+
+      break
     case 'SET_MODE':
       draft.mode = action.payload as ScaleMode
       break
@@ -75,13 +88,17 @@ const gameReducer = produce((draft: GameState, action: GameAction) => {
 })
 
 export const GameProvider = (props: Props) => {
-  // Initialize with a placeholder state, to fix hydration errors that are caused by the randomness of the game
-  const [state, dispatch] = useImmerReducer(gameReducer, placeholderGameState)
+  const [state, dispatch] = useImmerReducer(gameReducer, null as unknown as GameState)
+  const [loading, setLoading] = useState(true)
 
-  // Wait till the component is mounted, before generating the initial game state
   useEffect(() => {
     dispatch({ type: 'INITIALIZE_GAME', payload: generateInitialGameState() })
+    setLoading(false)
   }, [])
+
+  if (loading) {
+    return <div>Loading...</div>
+  }
 
   return <GameContext.Provider value={{ state, dispatch }}>{props.children}</GameContext.Provider>
 }
