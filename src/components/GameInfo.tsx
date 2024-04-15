@@ -5,13 +5,10 @@ import { GameContext } from '@/contexts/GameContext'
 import { Note } from '@/types/Note'
 
 const MAX_NOTES = 7
-const MAX_NOTES_PLUS_ONE = MAX_NOTES + 1
 
 const GameInfo = () => {
   const { state, dispatch } = React.useContext(GameContext) || {}
-  const currentScale = state?.scales[state.scales.length - 1]
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const currentNote = state?.notes[0]
+  const currentScale = state?.currentScale
 
   const calculateScalePosition = (notes?: Note[]) => {
     if (!notes) {
@@ -23,7 +20,7 @@ const GameInfo = () => {
     }
 
     // Subtract the number of notes from the max number of notes + 1 to get the position
-    return numberSuffix(MAX_NOTES_PLUS_ONE - notes.length)
+    return numberSuffix(MAX_NOTES - notes.length)
   }
 
   const numberSuffix = (number: number): string => {
@@ -69,7 +66,6 @@ const GameInfo = () => {
           <h1>Tries Left: {state?.triesLeft}</h1>
         </div>
       </div>
-
       <div className='flex justify-evenly'>
         <h1 className='text-5xl'>
           Click the <span className='text-orange-400'>{calculateScalePosition(state?.notes)}</span>{' '}
