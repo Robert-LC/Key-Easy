@@ -1,14 +1,16 @@
 import { ScaleMode } from '@/types/Enums'
-import { Note } from '@/types/Note'
 import { Scale } from '@/types/Scale'
 import { getRandomScale } from '@/utils/GameUtils'
 import { GameState } from '@/contexts/GameContext'
 
+const DEFAULT_SCALE_AMOUNT = 5
+
 export const generateInitialGameState = (): GameState => {
-  const scales = createScalesStack(ScaleMode.Major, 5)
+  const scales = createScalesStack(ScaleMode.Major, DEFAULT_SCALE_AMOUNT)
   const currentScale = scales.pop()
   const notes = currentScale?.notes || []
   const currentNote = notes.shift()
+
   return {
     scales: scales,
     notes: notes,
@@ -16,25 +18,26 @@ export const generateInitialGameState = (): GameState => {
     currentScale: currentScale,
     isGameInProgress: true,
     mode: ScaleMode.Major,
+    noteStatuses: {},
     score: 0,
     showNoteNames: false,
     triesLeft: 3
   }
 }
 
-export const isNoteCorrect = (clickedNote: Note, state: GameState): boolean => {
-  const isCorrect = state.currentNote?.nameNoOctave === clickedNote.nameNoOctave
-
-  return isCorrect
-}
-
 // Helper functions
 
 const createScalesStack = (mode: ScaleMode, amount: number): Scale[] => {
-  const scales = []
+  const scales: Scale[] = []
 
-  for (let i = 0; i < amount; i++) {
-    scales.push(getRandomScale(mode))
+  let i = 0
+  while (i < amount) {
+    const randomScale = getRandomScale(mode)
+
+    if (!scales.includes(randomScale)) {
+      scales.push(randomScale)
+      i++
+    }
   }
 
   return scales
