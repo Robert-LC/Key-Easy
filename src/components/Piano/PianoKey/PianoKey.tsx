@@ -36,6 +36,11 @@ const Key = styled.button<Props>`
 `
 const PianoKey: React.FC<Props> = ({ note }) => {
   const context = useContext(GameContext)
+  if (!context) {
+    throw new Error('useGameContext must be used within a GameProvider')
+  }
+
+  const { state } = context
 
   const handleClick = (note: Note) => {
     playSound(note.fullName, 0.5)
