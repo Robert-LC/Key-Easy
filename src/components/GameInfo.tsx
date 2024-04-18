@@ -1,14 +1,14 @@
 'use client'
 import React from 'react'
 
-import { GameContext } from '@/contexts/GameContext'
 import { Note } from '@/types/Note'
+import { useGame } from '@/hooks/useGame'
 
 const MAX_NOTES = 7
 
 const GameInfo = () => {
-  const { state, dispatch } = React.useContext(GameContext) || {}
-  const currentScale = state?.currentScale
+  const { handleShowNoteNames, state } = useGame()
+  const currentScale = state.currentScale
 
   const calculateScalePosition = (notes?: Note[]) => {
     if (!notes) {
@@ -46,7 +46,7 @@ const GameInfo = () => {
           <h1>
             Current Scale: <span className='text-orange-400'>{currentScale?.name}</span>
           </h1>
-          <h1>Score: {state?.score}</h1>
+          <h1>Score: {state.score}</h1>
         </div>
 
         <div className='space-y-3'>
@@ -58,17 +58,15 @@ const GameInfo = () => {
               type='checkbox'
               id='noteNamesToggle'
               className='w-6 ml-2'
-              onChange={(e) =>
-                dispatch && dispatch({ type: 'SHOW_NOTE_NAMES', payload: e.target.checked })
-              }
+              onChange={handleShowNoteNames}
             />
           </div>
-          <h1>Tries Left: {state?.triesLeft}</h1>
+          <h1>Tries Left: {state.triesLeft}</h1>
         </div>
       </div>
       <div className='flex justify-evenly'>
         <h1 className='text-5xl'>
-          Click the <span className='text-orange-400'>{calculateScalePosition(state?.notes)}</span>{' '}
+          Click the <span className='text-orange-400'>{calculateScalePosition(state.notes)}</span>{' '}
           Note
         </h1>
       </div>

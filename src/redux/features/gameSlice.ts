@@ -1,7 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { generateInitialGameState } from '@/services/GameService'
-import { GameState } from '@/contexts/GameContext'
+import { GameState } from '@/types/GameState'
 
 const INTIAL_TRIES = 3
 const initialState: GameState = generateInitialGameState()
@@ -15,40 +15,33 @@ export const game = createSlice({
     },
     decrementTriesLeft: (state) => {
       state.triesLeft -= 1
-
-      if (state.triesLeft === 1) {
-        state.triesLeft = INTIAL_TRIES
-        game.caseReducers.incrementNote(state)
-      }
     },
     incrementScore: (state) => {
       state.score += 1
     },
     incrementScale: (state) => {
       state.currentScale = state.scales.pop()
-      if (!state.currentScale) {
-        state.isGameInProgress = false
-      } else {
-        game.caseReducers.incrementNote(state)
-      }
     },
     incrementNote: (state) => {
       state.currentNote = state.notes.shift()
-      if (!state.currentNote) {
-        game.caseReducers.incrementScale(state)
-      }
-
+    },
+    resetTriesLeft: (state) => {
       state.triesLeft = INTIAL_TRIES
+    },
+    setGameInProgress: (state, action: PayloadAction<boolean>) => {
+      state.isGameInProgress = action.payload
     }
   }
 })
 
 export const {
-  toggleNoteNames,
   decrementTriesLeft,
-  incrementScore,
+  incrementNote,
   incrementScale,
-  incrementNote
+  incrementScore,
+  resetTriesLeft,
+  setGameInProgress,
+  toggleNoteNames
 } = game.actions
 
 export default game.reducer

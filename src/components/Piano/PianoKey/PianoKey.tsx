@@ -1,9 +1,9 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 import { Note } from '@/types/Note'
-import { GameContext } from '@/contexts/GameContext'
 import { playSound } from '@/services/SoundService'
+import { useGame } from '@/hooks/useGame'
 
 type Props = {
   note: Note
@@ -35,23 +35,19 @@ const Key = styled.button<Props>`
   }
 `
 const PianoKey: React.FC<Props> = ({ note }) => {
-  const context = useContext(GameContext)
-  if (!context) {
-    throw new Error('useGameContext must be used within a GameProvider')
-  }
+  const { handleNoteClick, state } = useGame()
 
-  const { state } = context
-
-  const handleClick = (note: Note) => {
+  const onKeyClick = (note: Note) => {
     playSound(note.fullName, 0.5)
+    handleNoteClick(note)
   }
 
   return note.accidental === '' ? (
-    <Key note={note} isBlack={false} onClick={() => handleClick(note)}>
+    <Key note={note} isBlack={false} onClick={() => onKeyClick(note)}>
       {state.showNoteNames && note.nameNoOctave}
     </Key>
   ) : (
-    <Key note={note} isBlack={true} onClick={() => handleClick(note)}>
+    <Key note={note} isBlack={true} onClick={() => onKeyClick(note)}>
       {state.showNoteNames && note.nameNoOctave}
     </Key>
   )
