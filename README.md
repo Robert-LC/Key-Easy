@@ -19,7 +19,9 @@ Try it [here!](https://key-easy.netlify.app/)
 
 - [TypeScript](https://www.typescriptlang.org/) The whole app, front to back, is written in TypeScript and it really made me appreciate how much simpler it makes JS feel because of its strongly typed nature.
 
-- [React](https://react.dev/) the frontend framework we know and love. I kept it mostly vanilla, but when managing my complex state for the game, I added in [Immer](https://github.com/immerjs/immer) which made my `GameState` reducer much cleaner.
+- [React](https://react.dev/) the frontend framework we know and love. I kept it mostly vanilla, but when managing my complex state for the game
+
+- [Redux](https://redux.js.org/) to help manage the complicated game state, as well as the auth states. I initially went with React's built in Context API, but half way through development realized that my complex state would benefit from redux's state manipulation to make the code much cleaner. Since my current Scale and current Note states were heavily intertwined with complex logic around them.
 
 - [NextJS](https://nextjs.org/) was instrumental in my backend component of this app, (storing scores, users, and more) and it's built in routing allowed me to take KeyEasy from a simple SPA to a dynamic full-stack web application.
 
@@ -32,5 +34,3 @@ Try it [here!](https://key-easy.netlify.app/)
 - [Tailwind](https://tailwindcss.com/) I'm a developer not a designer, so having quick out of the box styles from Tailwind, let me focus on the app itself, and less time dealing with styling and CSS, but it still looks pretty.
 
 - [Tonaljs](https://github.com/tonaljs/tonal) is a functional JS library, built with the purpose of bringing music theory to code. I used it to manipulate musical elements like notes, scales, and chords. All in abstractions (no music or sounds produced). While implementing it, I even made a few PRs of my own to help improve the usability of Tonal for everyone.
-
-- [PianoSounds](https://github.com/RyanAnton/piano-sounds) thank you to [RyanAnton](https://github.com/RyanAnton), for their collection of piano sounds which made it easy for me to focus on the app itself and not have to worry about creating my own.
