@@ -1,28 +1,33 @@
-import { useContext } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { GameContext } from '@/contexts/GameContext'
+import { decrementTriesLeft, incrementNote, incrementScore } from '@/redux/features/gameSlice'
+import { AppDispatch, RootState } from '@/redux/store'
+import { Note } from '@/types/Note'
 
 export function useGame() {
-  const context = useContext(GameContext)
-  if (!context) {
-    throw new Error('useGame must be used within a GameProvider')
-  }
+  const dispatch = useDispatch<AppDispatch>()
+  const state = useSelector((state: RootState) => state.gameReducer)
 
-  const { state, dispatch } = context
-
-  const incrementScoreAndNote = () => {
-    dispatch({ type: 'INCREMENT_SCORE' })
-    dispatch({ type: 'INCREMENT_NOTE' })
-  }
-
-  const decrementTriesOrReset = () => {
-    dispatch({ type: 'DECREMENT_TRIES_LEFT' })
-
-    if (state.triesLeft === 0) {
-      dispatch({ type: 'INCREMENT_NOTE' })
-      dispatch({ type: 'RESET_TRIES_LEFT' })
+  const handleNoteClick = (note: Note) => {
+    if (note.fullName === state.currentNote?.fullName) {
+      handleIncrementScore()
+      handleIncrementNote()
+    } else {
+      handleDecrementTriesLeft()
     }
   }
 
-  return { state, incrementScoreAndNote, decrementTriesOrReset }
+  const handleDecrementTriesLeft = () => {
+    dispatch(decrementTriesLeft())
+  }
+
+  const handleIncrementScore = () => {
+    dispatch(incrementScore())
+  }
+
+  const handleIncrementNote = () => {
+    dispatch(incrementNote())
+  }
+
+  return { handleNoteClick, state }
 }
