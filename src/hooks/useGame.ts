@@ -1,5 +1,3 @@
-import { useDispatch, useSelector } from 'react-redux'
-
 import {
   decrementTriesLeft,
   incrementNote,
@@ -9,19 +7,22 @@ import {
   setGameInProgress,
   toggleNoteNames
 } from '@/redux/features/gameSlice'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { AppDispatch, RootState } from '@/redux/store'
 import { Note } from '@/types/Note'
 
 export const useGame = () => {
-  const dispatch = useDispatch<AppDispatch>()
-  const state = useSelector((state: RootState) => state.gameReducer)
+  const dispatch = useAppDispatch<AppDispatch>()
+  const state = useAppSelector((state: RootState) => state.gameReducer)
 
   const handleShowNoteNames = () => {
     dispatch(toggleNoteNames())
   }
 
   const handleNoteClick = (note: Note) => {
-    note.fullName === state.currentNote?.fullName ? handleCorrectNote() : handleIncorrectNote()
+    note.nameNoOctave === state.currentNote?.nameNoOctave
+      ? handleCorrectNote()
+      : handleIncorrectNote()
   }
 
   const handleCorrectNote = () => {

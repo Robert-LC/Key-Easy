@@ -1,10 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { generateInitialGameState } from '@/services/GameService'
 import { GameState } from '@/types/GameState'
+import { ScaleMode } from '@/types/Enums'
 
 const INTIAL_TRIES = 3
-const initialState: GameState = generateInitialGameState()
+const initialState = {
+  notes: [],
+  scales: [],
+  currentNote: undefined,
+  currentScale: undefined,
+  isGameInProgress: true,
+  mode: ScaleMode.Major,
+  score: 0,
+  showNoteNames: true,
+  triesLeft: INTIAL_TRIES
+} as GameState
 
 export const game = createSlice({
   name: 'game',
@@ -25,6 +35,9 @@ export const game = createSlice({
     incrementNote: (state) => {
       state.currentNote = state.notes.shift()
     },
+    initializeGame: (state, action: PayloadAction<GameState>) => {
+      return action.payload
+    },
     resetTriesLeft: (state) => {
       state.triesLeft = INTIAL_TRIES
     },
@@ -39,6 +52,7 @@ export const {
   incrementNote,
   incrementScale,
   incrementScore,
+  initializeGame,
   resetTriesLeft,
   setGameInProgress,
   toggleNoteNames
