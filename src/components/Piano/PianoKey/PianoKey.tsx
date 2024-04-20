@@ -8,6 +8,7 @@ import { useGame } from '@/hooks/useGame'
 type Props = {
   $note: Note
   $isBlack?: boolean
+  $noteStatus?: 'CORRECT' | 'MISSED_CORRECT' | 'NONE'
 }
 
 const Key = styled.button<Props>`
@@ -19,7 +20,16 @@ const Key = styled.button<Props>`
   z-index: ${(props) => (props.$isBlack ? '2' : '1')};
   border: ${(props) => (props.$isBlack ? 'none' : '1px solid black')};
   box-shadow: ${(props) => (props.$isBlack ? 'none' : '2px 5px')};
-  background-color: ${(props) => (props.$isBlack ? 'black' : '#ededed')};
+  background-color: ${(props) => {
+    const noteStatus = props.$noteStatus
+    if (noteStatus === 'CORRECT') {
+      return 'green'
+    } else if (noteStatus === 'MISSED_CORRECT') {
+      return 'orange'
+    } else {
+      return props.$isBlack ? 'black' : '#ededed'
+    }
+  }};
 
   color: ${(props) => (props.$isBlack ? 'white' : 'black')};
   font-family: sans-serif;
@@ -43,11 +53,21 @@ const PianoKey: React.FC<Props> = ({ $note: note }) => {
   }
 
   return note.accidental === '' ? (
-    <Key $note={note} $isBlack={false} onClick={() => onKeyClick(note)}>
+    <Key
+      $note={note}
+      $isBlack={false}
+      $noteStatus={state.noteStatuses[note.nameNoOctave]}
+      onClick={() => onKeyClick(note)}
+    >
       {state.showNoteNames && note.nameNoOctave}
     </Key>
   ) : (
-    <Key $note={note} $isBlack={true} onClick={() => onKeyClick(note)}>
+    <Key
+      $note={note}
+      $isBlack={true}
+      $noteStatus={state.noteStatuses[note.nameNoOctave]}
+      onClick={() => onKeyClick(note)}
+    >
       {state.showNoteNames && note.nameNoOctave}
     </Key>
   )

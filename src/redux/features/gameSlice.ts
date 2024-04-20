@@ -13,7 +13,8 @@ const initialState = {
   mode: ScaleMode.Major,
   score: 0,
   showNoteNames: true,
-  triesLeft: INTIAL_TRIES
+  triesLeft: INTIAL_TRIES,
+  noteStatuses: {}
 } as GameState
 
 export const game = createSlice({
@@ -43,6 +44,12 @@ export const game = createSlice({
     },
     setGameInProgress: (state, action: PayloadAction<boolean>) => {
       state.isGameInProgress = action.payload
+    },
+    setNoteStatus: (
+      state,
+      action: PayloadAction<{ noteName: string; status: 'CORRECT' | 'MISSED_CORRECT' | 'NONE' }>
+    ) => {
+      state.noteStatuses[action.payload.noteName] = action.payload.status
     }
   }
 })
@@ -55,6 +62,7 @@ export const {
   initializeGame,
   resetTriesLeft,
   setGameInProgress,
+  setNoteStatus,
   toggleNoteNames
 } = game.actions
 

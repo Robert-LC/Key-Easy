@@ -5,6 +5,7 @@ import {
   incrementScore,
   resetTriesLeft,
   setGameInProgress,
+  setNoteStatus,
   toggleNoteNames
 } from '@/redux/features/gameSlice'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
@@ -26,6 +27,7 @@ export const useGame = () => {
   }
 
   const handleCorrectNote = () => {
+    dispatch(setNoteStatus({ noteName: state.currentNote!.nameNoOctave, status: 'CORRECT' }))
     incrementGame()
     dispatch(incrementScore())
   }
@@ -33,6 +35,9 @@ export const useGame = () => {
   const handleIncorrectNote = () => {
     dispatch(decrementTriesLeft())
     if (state.triesLeft === 1) {
+      dispatch(
+        setNoteStatus({ noteName: state.currentNote!.nameNoOctave, status: 'MISSED_CORRECT' })
+      )
       incrementGame()
     }
   }

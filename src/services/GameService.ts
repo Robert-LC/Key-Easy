@@ -1,7 +1,7 @@
 import { ScaleMode } from '@/types/Enums'
+import { GameState } from '@/types/GameState'
 import { Scale } from '@/types/Scale'
 import { getRandomScale } from '@/utils/GameUtils'
-import { GameState } from '@/contexts/GameContext'
 
 const DEFAULT_SCALE_AMOUNT = 5
 
@@ -10,6 +10,11 @@ export const generateInitialGameState = (): GameState => {
   const currentScale = scales.pop()
   const notes = currentScale?.notes || []
   const currentNote = notes.shift()
+  const noteStatuses: Record<string, 'CORRECT' | 'MISSED_CORRECT' | 'NONE'> = {}
+
+  notes.forEach((note) => {
+    noteStatuses[note.nameNoOctave] = 'NONE'
+  })
 
   return {
     scales: scales,
