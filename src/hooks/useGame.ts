@@ -21,13 +21,11 @@ export const useGame = () => {
   }
 
   const handleNoteClick = (note: Note) => {
-    note.nameNoOctave === state.currentNote?.nameNoOctave
-      ? handleCorrectNote()
-      : handleIncorrectNote()
+    note.fullName === state.currentNote?.fullName ? handleCorrectNote() : handleIncorrectNote()
   }
 
   const handleCorrectNote = () => {
-    dispatch(setNoteStatus({ noteName: state.currentNote!.nameNoOctave, status: 'CORRECT' }))
+    dispatch(setNoteStatus({ noteName: state.currentNote!.fullName, status: 'CORRECT' }))
     incrementGame()
     dispatch(incrementScore())
   }
@@ -35,9 +33,7 @@ export const useGame = () => {
   const handleIncorrectNote = () => {
     dispatch(decrementTriesLeft())
     if (state.triesLeft === 1) {
-      dispatch(
-        setNoteStatus({ noteName: state.currentNote!.nameNoOctave, status: 'MISSED_CORRECT' })
-      )
+      dispatch(setNoteStatus({ noteName: state.currentNote!.fullName, status: 'MISSED_CORRECT' }))
       incrementGame()
     }
   }

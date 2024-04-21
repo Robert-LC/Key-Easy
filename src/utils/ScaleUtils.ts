@@ -18,5 +18,3 @@ export const createScaleFromTonal = (scaleName: string): Scale => {
     type
   }
 }
-
-export const defaultScale = () => createScaleFromTonal('C major')

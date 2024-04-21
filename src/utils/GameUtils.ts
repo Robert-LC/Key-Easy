@@ -5,9 +5,7 @@ import { Scale } from '@/types/Scale'
 import { ScaleMode } from '../types/Enums'
 import { createScaleFromTonal } from './ScaleUtils'
 import { stripOctave } from './NoteUtils'
-
-const STARTING_NOTE = 'C4'
-const ENDING_NOTE = 'B4'
+import { ENDING_NOTE, STARTING_NOTE } from './GameConstants'
 
 /**
  * Generates a random scale based on the given mode

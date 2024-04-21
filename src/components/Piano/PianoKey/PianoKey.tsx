@@ -56,7 +56,7 @@ const PianoKey: React.FC<Props> = ({ $note: note }) => {
     <Key
       $note={note}
       $isBlack={false}
-      $noteStatus={state.noteStatuses[note.nameNoOctave]}
+      $noteStatus={state.noteStatuses[note.fullName]}
       onClick={() => onKeyClick(note)}
     >
       {state.showNoteNames && note.nameNoOctave}
@@ -65,7 +65,7 @@ const PianoKey: React.FC<Props> = ({ $note: note }) => {
     <Key
       $note={note}
       $isBlack={true}
-      $noteStatus={state.noteStatuses[note.nameNoOctave]}
+      $noteStatus={state.noteStatuses[note.fullName]}
       onClick={() => onKeyClick(note)}
     >
       {state.showNoteNames && note.nameNoOctave}
