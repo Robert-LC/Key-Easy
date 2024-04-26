@@ -39,17 +39,17 @@ const GameInfo = () => {
   return (
     <>
       <div
-        className='flex justify-evenly bg-menu-blue p-6 m-6'
-        style={{ border: '6px solid #1e313d' }}
+        className='flex justify-evenly bg-menu-blue p-8'
+        style={{ border: '0.6em solid #1e313d' }}
       >
-        <div className='space-y-3'>
+        <div className='space-y-4'>
           <h1>
             Current Scale: <span className='text-orange-400'>{currentScale?.name}</span>
           </h1>
           <h1>Score: {state.score}</h1>
         </div>
 
-        <div className='space-y-3'>
+        <div className='space-y-4'>
           <div className='inline-flex'>
             <label htmlFor='noteNamesToggle' className='text-white font-bold text-2xl'>
               Show Note Names:
@@ -65,7 +65,7 @@ const GameInfo = () => {
         </div>
       </div>
       <div className='flex justify-evenly'>
-        <h1 className='text-5xl'>
+        <h1 className='text-6xl'>
           Click the <span className='text-orange-400'>{calculateScalePosition(state.notes)}</span>{' '}
           Note
         </h1>
