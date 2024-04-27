@@ -16,15 +16,29 @@ const WhiteKey: React.FC<KeyProps> = ({ x, y, width, height, radius, padding, no
   padding = padding || 0
 
   return (
-    <rect
-      x={x * width + padding / 2}
-      y={y}
-      width={width - padding}
-      height={height}
-      className='white-key'
-      rx={radius}
-      onClick={() => onKeyClick(note)}
-    />
+    <g>
+      <rect
+        x={x * width + padding / 2}
+        y={y}
+        width={width - padding}
+        height={height}
+        className='white-key'
+        rx={radius}
+        onClick={() => onKeyClick(note)}
+      />
+      {state.showNoteNames && (
+        <text
+          x={x * width + width / 2}
+          y={y + height - 10}
+          textAnchor='middle'
+          dominantBaseline='middle'
+          className='white-key-text'
+          fontSize='1rem'
+        >
+          {note.nameNoOctave}
+        </text>
+      )}
+    </g>
   )
 }
 

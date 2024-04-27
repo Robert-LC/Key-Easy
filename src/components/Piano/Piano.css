@@ -25,6 +25,11 @@
   transform: scale(0.98);
 }
 
+.white-key-text {
+  pointer-events: none;
+  font-weight: 600;
+}
+
 .black-key {
   transform-origin: top center;
   transform-box: fill-box;
@@ -35,4 +40,10 @@
 .black-key:hover {
   fill: #2b5075;
   transform: scale(0.97);
+}
+
+.black-key-text {
+  fill: white;
+  pointer-events: none;
+  font-weight: 600;
 }

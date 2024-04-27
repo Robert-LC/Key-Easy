@@ -33,15 +33,29 @@ const BlackKey: React.FC<BlackKeyProps> = ({
   padding = padding || 0
 
   return (
-    <rect
-      x={x}
-      y={y}
-      width={width - padding}
-      height={height}
-      className='black-key'
-      rx={radius}
-      onClick={() => onKeyClick(note)}
-    />
+    <g>
+      <rect
+        x={x}
+        y={y}
+        width={width - padding}
+        height={height}
+        className='black-key'
+        rx={radius}
+        onClick={() => onKeyClick(note)}
+      />
+      {state.showNoteNames && (
+        <text
+          x={x + width / 2}
+          y={y + height - 10}
+          textAnchor='middle'
+          dominantBaseline='middle'
+          className='black-key-text'
+          fontSize='0.75rem'
+        >
+          {note.nameNoOctave}
+        </text>
+      )}
+    </g>
   )
 }
 
