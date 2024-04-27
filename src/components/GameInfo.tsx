@@ -43,15 +43,15 @@ const GameInfo = () => {
         style={{ border: '0.6em solid #1e313d' }}
       >
         <div className='space-y-4'>
-          <h1>
+          <span className='text-white text-3xl font-bold'>
             Current Scale: <span className='text-orange-400'>{currentScale?.name}</span>
-          </h1>
-          <h1>Score: {state.score}</h1>
+          </span>
+          <p className='text-white text-3xl font-bold'>Score: {state.score}</p>
         </div>
 
         <div className='space-y-4'>
           <div className='inline-flex'>
-            <label htmlFor='noteNamesToggle' className='text-white font-bold text-2xl'>
+            <label htmlFor='noteNamesToggle' className='text-white font-bold text-3xl'>
               Show Note Names:
             </label>
             <input
@@ -61,14 +61,14 @@ const GameInfo = () => {
               onChange={handleShowNoteNames}
             />
           </div>
-          <h1>Tries Left: {state.triesLeft}</h1>
+          <p className='text-white text-2xl font-bold'>Tries Left: {state.triesLeft}</p>
         </div>
       </div>
       <div className='flex justify-evenly'>
-        <h1 className='text-5xl'>
+        <span className='text-white text-6xl font-bold'>
           Click the <span className='text-orange-400'>{calculateScalePosition(state.notes)}</span>{' '}
           Note
-        </h1>
+        </span>
       </div>
     </div>
   )
