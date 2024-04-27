@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google'
 
 import './globals.css'
 import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer'
+// import Footer from '@/components/Footer'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,11 +18,10 @@ const RootLayout = ({
   children: React.ReactNode
 }>) => {
   return (
-    <html lang='en'>
-      <body className={(inter.className, 'flex flex-col justify-between h-screen')}>
+    <html className='h-screen' lang='en'>
+      <body className={(inter.className, 'flex flex-col h-full')}>
         <Navbar />
-        <main className='h-full w-full p-4'>{children}</main>
-        <Footer />
+        <main className='flex flex-col h-full justify-center'>{children}</main>
       </body>
     </html>
   )

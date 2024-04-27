@@ -5,7 +5,7 @@ import StoreProvider from './StoreProvider'
 
 const Home = () => {
   return (
-    <div className='flex flex-col justify-evenly h-full p-10'>
+    <div className='m-4'>
       <StoreProvider>
         <GameInfo />
         <Piano />

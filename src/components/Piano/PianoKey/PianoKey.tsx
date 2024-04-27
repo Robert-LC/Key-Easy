@@ -1,50 +1,37 @@
 import React from 'react'
-import styled from 'styled-components'
 
 import { Note } from '@/types/Note'
 import { playSound } from '@/services/SoundService'
 import { useGame } from '@/hooks/useGame'
+import { WHITE_KEY_COLOR } from '@/utils/GameConstants'
 
 type Props = {
-  $note: Note
-  $isBlack?: boolean
-  $noteStatus?: 'CORRECT' | 'MISSED_CORRECT' | 'NONE'
+  //visual
+  x: number
+  y: number
+  width: number
+  height: number
+  radius: number
+  padding?: number
+  gridWidth?: number
+  color: 'BLACK' | 'WHITE'
+
+  //funcitonal
+  note: Note
+  // noteStatus?: 'CORRECT' | 'MISSED_CORRECT' | 'NONE'
 }
 
-const Key = styled.button<Props>`
-  width: ${(props) => (props.$isBlack ? '78px' : '110px')};
-  height: ${(props) => (props.$isBlack ? '260px' : '400px')};
-  position: ${(props) => (props.$isBlack ? 'absolute' : 'static')};
-  margin: 1px;
-  margin-left: ${(props) => (props.$isBlack ? '-40px' : '0')};
-  z-index: ${(props) => (props.$isBlack ? '2' : '1')};
-  border: ${(props) => (props.$isBlack ? 'none' : '1px solid black')};
-  box-shadow: ${(props) => (props.$isBlack ? 'none' : '2px 5px')};
-  background-color: ${(props) => {
-    const noteStatus = props.$noteStatus
-    if (noteStatus === 'CORRECT') {
-      return 'green'
-    } else if (noteStatus === 'MISSED_CORRECT') {
-      return 'orange'
-    } else {
-      return props.$isBlack ? 'black' : '#ededed'
-    }
-  }};
-
-  color: ${(props) => (props.$isBlack ? 'white' : 'black')};
-  font-family: sans-serif;
-  font-weight: bold;
-  font-size: 40px;
-  display: inline-flex;
-  flex-wrap: wrap;
-  align-content: flex-end;
-  justify-content: center;
-
-  &:hover {
-    filter: ${(props) => (props.$isBlack ? 'brightness(85%)' : 'brightness(90%)')};
-  }
-`
-const PianoKey: React.FC<Props> = ({ $note: note }) => {
+const PianoKey: React.FC<Props> = ({
+  x,
+  y,
+  width,
+  height,
+  radius,
+  padding,
+  color,
+  gridWidth,
+  note
+}) => {
   const { handleNoteClick, state } = useGame()
 
   const onKeyClick = (note: Note) => {
@@ -52,25 +39,63 @@ const PianoKey: React.FC<Props> = ({ $note: note }) => {
     handleNoteClick(note)
   }
 
-  return note.accidental === '' ? (
-    <Key
-      $note={note}
-      $isBlack={false}
-      $noteStatus={state.noteStatuses[note.fullName]}
-      onClick={() => onKeyClick(note)}
-    >
-      {state.showNoteNames && note.nameNoOctave}
-    </Key>
-  ) : (
-    <Key
-      $note={note}
-      $isBlack={true}
-      $noteStatus={state.noteStatuses[note.fullName]}
-      onClick={() => onKeyClick(note)}
-    >
-      {state.showNoteNames && note.nameNoOctave}
-    </Key>
-  )
+  padding = padding || 0
+  gridWidth = gridWidth || 0
+
+  if (color == WHITE_KEY_COLOR) {
+    return (
+      <g>
+        <rect
+          x={x * width + padding / 2}
+          y={y}
+          width={width - padding}
+          height={height}
+          className='white-key'
+          rx={radius}
+          onClick={() => onKeyClick(note)}
+        />
+        {state.showNoteNames && (
+          <text
+            x={x * width + width / 2}
+            y={y + height - 10}
+            textAnchor='middle'
+            dominantBaseline='middle'
+            className='white-key-text'
+            fontSize='1rem'
+          >
+            {note.nameNoOctave}
+          </text>
+        )}
+      </g>
+    )
+  } else {
+    x = (x + 1) * gridWidth - width / 2
+    return (
+      <g>
+        <rect
+          x={x}
+          y={y}
+          width={width - padding}
+          height={height}
+          className='black-key'
+          rx={radius}
+          onClick={() => onKeyClick(note)}
+        />
+        {state.showNoteNames && (
+          <text
+            x={x + width / 2}
+            y={y + height - 10}
+            textAnchor='middle'
+            dominantBaseline='middle'
+            className='black-key-text'
+            fontSize='0.75rem'
+          >
+            {note.nameNoOctave}
+          </text>
+        )}
+      </g>
+    )
+  }
 }
 
 export default PianoKey
