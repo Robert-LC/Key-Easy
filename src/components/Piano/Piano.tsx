@@ -78,7 +78,7 @@ const Piano = () => {
   const totalWidth = whiteKeys.length * WHITE_KEY_WIDTH
   const yMin = PANEL_HEIGHT * -1 + KEY_RADIUS
   return (
-    <div className='m-10'>
+    <div className='m-4'>
       <svg className='piano' viewBox={`0 ${yMin} ${totalWidth} ${WHITE_KEY_HEIGHT + PANEL_HEIGHT}`}>
         <g>
           {whiteKeys}

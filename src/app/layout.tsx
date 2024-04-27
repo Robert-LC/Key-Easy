@@ -19,9 +19,9 @@ const RootLayout = ({
 }>) => {
   return (
     <html lang='en'>
-      <body className={(inter.className, 'flex flex-col justify-between h-screen')}>
+      <body className={(inter.className, 'flex flex-col h-screen')}>
         <Navbar />
-        <main className='h-full w-full p-4'>{children}</main>
+        <main>{children}</main>
         <Footer />
       </body>
     </html>
