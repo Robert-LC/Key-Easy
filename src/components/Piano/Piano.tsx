@@ -3,12 +3,12 @@ import React from 'react'
 import { Range } from 'tonal'
 
 import { createNoteFromTonal } from '@/utils/NoteUtils'
+import { BLACK_KEY_COLOR, WHITE_KEY_COLOR } from '@/utils/GameConstants'
 
-// import PianoKey from './PianoKey/PianoKey'
+import PianoKey from './PianoKey/PianoKey'
 import { Note } from '../../types/Note'
-import WhiteKey from './PianoKey/WhiteKey'
-import BlackKey from './PianoKey/BlackKey'
 import Panel from './Panel'
+
 import './Piano.css'
 
 // Sizing constants
@@ -19,7 +19,7 @@ const BLACK_KEY_HEIGHT = WHITE_KEY_HEIGHT * 0.65
 const PANEL_HEIGHT = 12
 const PANEL_SHADOW_HEIGHT = 4
 const KEY_RADIUS = 4
-const KEY_PADDING = 2
+const KEY_PADDING = 1.5
 
 const createNotes = (): Note[] => {
   const noteNames = Range.chromatic(['C4', 'B5'])
@@ -40,39 +40,41 @@ const Piano = () => {
   const whiteKeys = []
   const blackKeys = []
   let currNoteIndex = 0
-  let i = 0
+  let xPosition = 0
 
   while (!allKeysRendered()) {
     whiteKeys.push(
-      <WhiteKey
-        x={i}
+      <PianoKey
+        x={xPosition}
         y={0}
         width={WHITE_KEY_WIDTH}
         height={WHITE_KEY_HEIGHT}
-        key={i}
+        key={xPosition}
         padding={KEY_PADDING}
         radius={KEY_RADIUS}
+        color={WHITE_KEY_COLOR}
         note={notes[currNoteIndex]}
       />
     )
 
     // Check if the current note has a black key next to it
-    if (blackKeyPattern[i % 7] === 1) {
+    if (blackKeyPattern[xPosition % 7] === 1) {
       currNoteIndex++
       blackKeys.push(
-        <BlackKey
-          x={i}
+        <PianoKey
+          x={xPosition}
           y={0}
-          key={i + 0.5}
+          key={xPosition + 0.5}
           width={BLACK_KEY_WIDTH}
           height={BLACK_KEY_HEIGHT}
           gridWidth={WHITE_KEY_WIDTH}
           radius={KEY_RADIUS}
+          color={BLACK_KEY_COLOR}
           note={notes[currNoteIndex]}
         />
       )
     }
-    i++
+    xPosition++
     currNoteIndex++
   }
   const totalWidth = whiteKeys.length * WHITE_KEY_WIDTH
