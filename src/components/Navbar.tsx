@@ -19,7 +19,7 @@ const Navbar = () => {
   // }, [])
 
   return (
-    <nav className='flex-between w-full shadow-xl h-16 p-6 bg-menu-blue'>
+    <nav className='flex-between w-full shadow-xl sm:p-2 md:p-4 bg-menu-blue'>
       {isUserLoggedIn ? (
         <>
           <div className='flex gap-3'>

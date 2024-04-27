@@ -37,9 +37,9 @@ const GameInfo = () => {
   }
 
   return (
-    <>
+    <div>
       <div
-        className='flex justify-evenly bg-menu-blue p-8'
+        className='flex justify-evenly bg-menu-blue p-6'
         style={{ border: '0.6em solid #1e313d' }}
       >
         <div className='space-y-4'>
@@ -65,12 +65,12 @@ const GameInfo = () => {
         </div>
       </div>
       <div className='flex justify-evenly'>
-        <h1 className='text-6xl'>
+        <h1 className='text-5xl'>
           Click the <span className='text-orange-400'>{calculateScalePosition(state.notes)}</span>{' '}
           Note
         </h1>
       </div>
-    </>
+    </div>
   )
 }
 

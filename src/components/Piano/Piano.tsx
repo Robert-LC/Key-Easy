@@ -13,7 +13,7 @@ import './Piano.css'
 
 // Sizing constants
 const WHITE_KEY_WIDTH = 30
-const WHITE_KEY_HEIGHT = 100
+const WHITE_KEY_HEIGHT = 95
 const BLACK_KEY_WIDTH = WHITE_KEY_WIDTH * 0.7
 const BLACK_KEY_HEIGHT = WHITE_KEY_HEIGHT * 0.65
 const PANEL_HEIGHT = 12
