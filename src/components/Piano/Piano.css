@@ -1,8 +1,11 @@
 :root {
   --whitekey-fill: white;
   --blackkey-fill: black;
+  --greenkey-fill: green;
+  --orangekey-fill: orange;
   --panel-fill: #e84545;
   --pressed-fill: #4f81c7;
+  --hover-fill: #3c70a4;
 }
 
 .panel {
@@ -20,11 +23,6 @@
   fill: var(--whitekey-fill);
 }
 
-.white-key:hover {
-  fill: #3c70a4;
-  transform: scale(0.98);
-}
-
 .white-key-text {
   pointer-events: none;
   font-weight: 600;
@@ -37,13 +35,33 @@
   fill: var(--blackkey-fill);
 }
 
-.black-key:hover {
-  fill: #2b5075;
-  transform: scale(0.97);
-}
-
 .black-key-text {
   fill: white;
   pointer-events: none;
   font-weight: 600;
+}
+
+.green-key {
+  transform-origin: top center;
+  transform-box: fill-box;
+  transition: all 100ms;
+  fill: var(--greenkey-fill);
+}
+
+.white-key:hover,
+.black-key:hover,
+.green-key:hover,
+.orange-key:hover {
+  transform-origin: top center;
+  transform-box: fill-box;
+  transition: all 100ms;
+  transform: scale(0.98);
+  fill: var(--hover-fill);
+}
+
+.orange-key {
+  transform-origin: top center;
+  transform-box: fill-box;
+  transition: all 100ms;
+  fill: var(--orangekey-fill);
 }

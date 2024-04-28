@@ -18,7 +18,7 @@ type Props = {
 
   //funcitonal
   note: Note
-  // noteStatus?: 'CORRECT' | 'MISSED_CORRECT' | 'NONE'
+  noteStatus?: 'CORRECT' | 'MISSED_CORRECT' | 'NONE'
 }
 
 const PianoKey: React.FC<Props> = ({
@@ -39,6 +39,17 @@ const PianoKey: React.FC<Props> = ({
     handleNoteClick(note)
   }
 
+  const getClassName = (note: Note) => {
+    switch (state.noteStatuses[note.fullName]) {
+      case 'CORRECT':
+        return 'green-key'
+      case 'MISSED_CORRECT':
+        return 'orange-key'
+      default:
+        return note.accidental ? 'black-key' : 'white-key'
+    }
+  }
+
   padding = padding || 0
   gridWidth = gridWidth || 0
 
@@ -50,7 +61,7 @@ const PianoKey: React.FC<Props> = ({
           y={y}
           width={width - padding}
           height={height}
-          className='white-key'
+          className={getClassName(note)}
           rx={radius}
           onClick={() => onKeyClick(note)}
         />
@@ -77,7 +88,7 @@ const PianoKey: React.FC<Props> = ({
           y={y}
           width={width - padding}
           height={height}
-          className='black-key'
+          className={getClassName(note)}
           rx={radius}
           onClick={() => onKeyClick(note)}
         />
