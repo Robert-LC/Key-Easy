@@ -1,4 +1,5 @@
 import {
+  clearNoteStatuses,
   decrementTriesLeft,
   incrementNote,
   incrementScale,
@@ -42,6 +43,7 @@ export const useGame = () => {
     dispatch(incrementNote())
     dispatch(resetTriesLeft())
     if (!state.currentNote) {
+      dispatch(clearNoteStatuses())
       dispatch(incrementScale())
       dispatch(incrementNote())
       if (!state.currentScale) {

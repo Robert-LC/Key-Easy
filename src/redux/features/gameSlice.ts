@@ -50,6 +50,9 @@ export const game = createSlice({
       action: PayloadAction<{ noteName: string; status: 'CORRECT' | 'MISSED_CORRECT' | 'NONE' }>
     ) => {
       state.noteStatuses[action.payload.noteName] = action.payload.status
+    },
+    clearNoteStatuses: (state) => {
+      state.noteStatuses = {}
     }
   }
 })
@@ -63,7 +66,8 @@ export const {
   resetTriesLeft,
   setGameInProgress,
   setNoteStatus,
-  toggleNoteNames
+  toggleNoteNames,
+  clearNoteStatuses
 } = game.actions
 
 export default game.reducer
