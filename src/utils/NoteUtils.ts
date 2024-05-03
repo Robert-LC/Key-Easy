@@ -1,5 +1,6 @@
 import { Note as TonalNote } from 'tonal'
 
+import { BLACK_KEY_COLOR, WHITE_KEY_COLOR } from '@/utils/GameConstants'
 import { Note } from '@/types/Note'
 
 /**
@@ -20,4 +21,14 @@ export const createNoteFromTonal = (noteName: string): Note => {
 
 export const stripOctave = (noteName: string): string => {
   return noteName.replace(/[0-9]/g, '')
+}
+
+export const deriveColorFromNote = (
+  note: Note
+): typeof BLACK_KEY_COLOR | typeof WHITE_KEY_COLOR => {
+  if (note.accidental === '' || note.accidental === undefined) {
+    return WHITE_KEY_COLOR
+  }
+
+  return BLACK_KEY_COLOR
 }
