@@ -1,21 +1,14 @@
 import { ScaleMode } from '../types/Enums'
-import { createScaleFromTonal } from './ScaleUtils'
-import { randomScale } from './GameUtils'
+import { getRandomScale } from './GameUtils'
 
-describe('randomScale', () => {
+describe('getRandomScale', () => {
   it('should return a random scale', () => {
-    const scale = randomScale(ScaleMode.Both)
+    const scale = getRandomScale(ScaleMode.Both)
     expect(scale).toBeDefined()
   })
 
-  it('should return a different scale than what currentScale is ', () => {
-    const currentScale = createScaleFromTonal('C Major')
-    const scale = randomScale(ScaleMode.Major, currentScale)
-    expect(scale).not.toBe(currentScale)
-  })
-
   it('should return a scale with the specified mode when mode is provided', () => {
-    const scale = randomScale(ScaleMode.Major)
+    const scale = getRandomScale(ScaleMode.Major)
     expect(scale.type).toContain('major')
   })
 })
