@@ -44,7 +44,6 @@ const createPianoKey = (xPosition: number, note: Note) => {
       radius={KEY_RADIUS}
       color={color}
       note={note}
-      data-testid='piano-key'
       gridWidth={color === BLACK_KEY_COLOR ? WHITE_KEY_WIDTH : undefined}
     />
   )
@@ -73,7 +72,11 @@ const createSVGPiano = (whiteKeys: React.JSX.Element[], blackKeys: React.JSX.Ele
   const yMin = PANEL_HEIGHT * -1 + KEY_RADIUS
 
   return (
-    <svg className='piano' viewBox={`0 ${yMin} ${totalWidth} ${WHITE_KEY_HEIGHT + PANEL_HEIGHT}`}>
+    <svg
+      className='piano'
+      data-testid='piano'
+      viewBox={`0 ${yMin} ${totalWidth} ${WHITE_KEY_HEIGHT + PANEL_HEIGHT}`}
+    >
       <g>
         {whiteKeys}
         {blackKeys}

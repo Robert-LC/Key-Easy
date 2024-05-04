@@ -55,7 +55,7 @@ const PianoKey: React.FC<Props> = ({
 
   if (color == WHITE_KEY_COLOR) {
     return (
-      <g>
+      <g data-testid='piano-key'>
         <rect
           x={x * width + padding / 2}
           y={y}
@@ -82,7 +82,7 @@ const PianoKey: React.FC<Props> = ({
   } else {
     x = (x + 1) * gridWidth - width / 2
     return (
-      <g>
+      <g data-testid='piano-key'>
         <rect
           x={x}
           y={y}
