@@ -1,6 +1,6 @@
 import { Scale as TonalScale } from 'tonal'
 
-import { ScaleMode } from '@/types/Enums'
+import { ScaleMode } from '@/types/Types'
 import { GameState } from '@/types/GameState'
 import { Scale } from '@/types/Scale'
 import { getRandomScale } from '@/utils/GameUtils'

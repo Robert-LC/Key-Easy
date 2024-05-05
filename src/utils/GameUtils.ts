@@ -2,7 +2,7 @@ import { Range } from 'tonal'
 
 import { Scale } from '@/types/Scale'
 
-import { ScaleMode } from '../types/Enums'
+import { ScaleMode } from '../types/Types'
 import { createScaleFromTonal } from './ScaleUtils'
 import { stripOctave } from './NoteUtils'
 import { ENDING_NOTE, STARTING_NOTE } from './GameConstants'

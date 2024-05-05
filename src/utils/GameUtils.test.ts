@@ -1,4 +1,4 @@
-import { ScaleMode } from '../types/Enums'
+import { ScaleMode } from '../types/Types'
 import { getRandomScale } from './GameUtils'
 
 describe('getRandomScale', () => {

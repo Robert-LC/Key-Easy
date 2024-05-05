@@ -3,3 +3,5 @@ export enum ScaleMode {
   Minor = 'Minor',
   Both = 'Both'
 }
+
+export type KeyColor = 'BLACK' | 'WHITE'

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { GameState } from '@/types/GameState'
-import { ScaleMode } from '@/types/Enums'
+import { ScaleMode } from '@/types/Types'
 
 const INTIAL_TRIES = 3
 const initialState = {

@@ -1,4 +1,4 @@
-import { ScaleMode } from './Enums'
+import { ScaleMode } from './Types'
 import { Note } from './Note'
 import { Scale } from './Scale'
 
