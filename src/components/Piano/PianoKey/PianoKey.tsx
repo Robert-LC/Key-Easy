@@ -4,6 +4,7 @@ import { Note } from '@/types/Note'
 import { playSound } from '@/services/SoundService'
 import { useGame } from '@/hooks/useGame'
 import { WHITE_KEY_COLOR } from '@/utils/GameConstants'
+import { KeyColor } from '@/types/Types'
 
 type Props = {
   //visual
@@ -14,7 +15,7 @@ type Props = {
   radius: number
   padding?: number
   gridWidth?: number
-  color: 'BLACK' | 'WHITE'
+  color: KeyColor
 
   //funcitonal
   note: Note
@@ -27,9 +28,9 @@ const PianoKey: React.FC<Props> = ({
   width,
   height,
   radius,
-  padding,
+  padding = 0,
   color,
-  gridWidth,
+  gridWidth = 0,
   note
 }) => {
   const { handleNoteClick, state } = useGame()
@@ -37,6 +38,74 @@ const PianoKey: React.FC<Props> = ({
   const onKeyClick = (note: Note) => {
     playSound(note.fullName, 0.5)
     handleNoteClick(note)
+  }
+
+  const calculateRectXPosition = (color: KeyColor, x: number, gridWidth: number, width: number) => {
+    let rectPosition
+    if (color === WHITE_KEY_COLOR) {
+      rectPosition = x * width + padding / 2
+    } else {
+      rectPosition = (x + 1) * gridWidth - width / 2
+    }
+
+    return rectPosition
+  }
+
+  const calculateTextXPosition = (color: KeyColor, x: number, width: number) => {
+    let textPosition
+    if (color === WHITE_KEY_COLOR) {
+      textPosition = width * (x + 0.5)
+    } else {
+      x = (x + 0.97) * gridWidth - width / 2
+      textPosition = x + width / 2
+    }
+
+    return textPosition
+  }
+
+  const generateKeySVG = (
+    color: KeyColor,
+    radius: number,
+    padding: number,
+    gridWidth: number,
+    note: Note
+  ) => {
+    const isWhiteKey = color === WHITE_KEY_COLOR
+    const rectWidth = width - padding
+    const rectPositionX = calculateRectXPosition(color, x, gridWidth, width)
+    const textPositionX = calculateTextXPosition(color, x, width)
+    const textPositionY = y + height - 10
+    const className = getClassName(note)
+    const fontSize = isWhiteKey ? '1rem' : '0.75rem'
+    const textClass = isWhiteKey ? 'white-key-text' : 'black-key-text'
+    const textAnchor = 'middle'
+    const dominantBaseline = 'middle'
+
+    return (
+      <g data-testid='piano-key'>
+        <rect
+          x={rectPositionX}
+          y={y}
+          width={rectWidth}
+          height={height}
+          className={className}
+          rx={radius}
+          onClick={() => onKeyClick(note)}
+        />
+        {state.showNoteNames && (
+          <text
+            x={textPositionX}
+            y={textPositionY}
+            textAnchor={textAnchor}
+            dominantBaseline={dominantBaseline}
+            className={textClass}
+            fontSize={fontSize}
+          >
+            {note.nameNoOctave}
+          </text>
+        )}
+      </g>
+    )
   }
 
   const getClassName = (note: Note) => {
@@ -50,63 +119,7 @@ const PianoKey: React.FC<Props> = ({
     }
   }
 
-  padding = padding || 0
-  gridWidth = gridWidth || 0
-
-  if (color == WHITE_KEY_COLOR) {
-    return (
-      <g data-testid='piano-key'>
-        <rect
-          x={x * width + padding / 2}
-          y={y}
-          width={width - padding}
-          height={height}
-          className={getClassName(note)}
-          rx={radius}
-          onClick={() => onKeyClick(note)}
-        />
-        {state.showNoteNames && (
-          <text
-            x={x * width + width / 2}
-            y={y + height - 10}
-            textAnchor='middle'
-            dominantBaseline='middle'
-            className='white-key-text'
-            fontSize='1rem'
-          >
-            {note.nameNoOctave}
-          </text>
-        )}
-      </g>
-    )
-  } else {
-    x = (x + 1) * gridWidth - width / 2
-    return (
-      <g data-testid='piano-key'>
-        <rect
-          x={x}
-          y={y}
-          width={width - padding}
-          height={height}
-          className={getClassName(note)}
-          rx={radius}
-          onClick={() => onKeyClick(note)}
-        />
-        {state.showNoteNames && (
-          <text
-            x={x + width / 2}
-            y={y + height - 10}
-            textAnchor='middle'
-            dominantBaseline='middle'
-            className='black-key-text'
-            fontSize='0.75rem'
-          >
-            {note.nameNoOctave}
-          </text>
-        )}
-      </g>
-    )
-  }
+  return generateKeySVG(color, radius, padding, gridWidth, note)
 }
 
 export default PianoKey
