@@ -7,13 +7,12 @@ import { ENDING_NOTE, PIANO_SVG_CONSTANTS, STARTING_NOTE } from '@/utils/GameCon
 
 import PianoKey from './PianoKey/PianoKey'
 import { Note } from '../../types/Note'
-import Panel from './Panel'
+import PianoPanel from './PianoPanel'
 
 import './Piano.css'
 
-// Sizing constants
-const PANEL_HEIGHT = 12
-const PANEL_SHADOW_HEIGHT = 4
+const { WHITE_KEY_WIDTH, WHITE_KEY_HEIGHT, BASE_Y_COORD, KEY_BORDER_RADIUS, PANEL_HEIGHT } =
+  PIANO_SVG_CONSTANTS
 
 const createNotes = (): Note[] => {
   const noteNames = Range.chromatic([STARTING_NOTE, ENDING_NOTE])
@@ -22,48 +21,28 @@ const createNotes = (): Note[] => {
 }
 
 const createPianoKey = (xPosition: number, note: Note) => {
-  return <PianoKey x={xPosition} y={PIANO_SVG_CONSTANTS.BASE_Y_COORD} note={note} />
+  return <PianoKey x={xPosition} y={BASE_Y_COORD} note={note} />
 }
 
-const createPanel = (
-  yMin: number,
-  totalWidth: number,
-  height: number,
-  shadowHeight: number,
-  keyRadius: number
-) => {
-  return (
-    <Panel
-      y={yMin}
-      width={totalWidth}
-      height={height}
-      shadowHeight={shadowHeight}
-      radius={keyRadius}
-    />
-  )
+const createPanel = (yMin: number, totalWidth: number) => {
+  return <PianoPanel y={yMin} width={totalWidth} />
 }
 
 const createSVGPiano = (whiteKeys: React.JSX.Element[], blackKeys: React.JSX.Element[]) => {
-  const totalWidth = whiteKeys.length * PIANO_SVG_CONSTANTS.WHITE_KEY_WIDTH
-  const yMin = PANEL_HEIGHT * -1 + PIANO_SVG_CONSTANTS.KEY_BORDER_RADIUS
+  const totalWidth = whiteKeys.length * WHITE_KEY_WIDTH
+  const yMin = PANEL_HEIGHT * -1 + KEY_BORDER_RADIUS
 
   return (
     <svg
       className='piano'
       data-testid='piano'
-      viewBox={`0 ${yMin} ${totalWidth} ${PIANO_SVG_CONSTANTS.WHITE_KEY_HEIGHT + PANEL_HEIGHT}`}
+      viewBox={`0 ${yMin} ${totalWidth} ${WHITE_KEY_HEIGHT + PANEL_HEIGHT}`}
     >
       <g>
         {whiteKeys}
         {blackKeys}
       </g>
-      {createPanel(
-        yMin,
-        totalWidth,
-        PANEL_HEIGHT,
-        PANEL_SHADOW_HEIGHT,
-        PIANO_SVG_CONSTANTS.KEY_BORDER_RADIUS
-      )}
+      {createPanel(yMin, totalWidth)}
     </svg>
   )
 }
