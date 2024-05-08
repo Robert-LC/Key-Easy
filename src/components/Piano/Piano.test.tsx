@@ -21,7 +21,7 @@ describe('Piano', () => {
     expect(keys.length).toBe(NUM_OF_KEYS)
   })
 
-  it('shows letters on piano keys when checkbox in GameInfo is checked', () => {
+  it('shows note names on piano keys when checkbox in GameInfo is checked', () => {
     renderWithProvider(
       <>
         <GameInfo />
