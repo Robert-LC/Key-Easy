@@ -19,58 +19,48 @@ const {
   WHITE_KEY_HEIGHT,
   WHITE_KEY_TEXT_CLASS,
   WHITE_KEY_FONT_SIZE,
+  WHITE_KEY_TEXT_OFFSET,
   BLACK_KEY_WIDTH,
   BLACK_KEY_HEIGHT,
   BLACK_KEY_TEXT_CLASS,
   BLACK_KEY_FONT_SIZE,
+  BLACK_KEY_TEXT_OFFSET,
+  BASE_Y_OFFSET,
   KEY_PADDING,
   KEY_BORDER_RADIUS,
   DOMINANT_BASELINE,
   TEXT_ANCHOR
 } = PIANO_SVG_CONSTANTS
 
-const calcRectSVGValues = (color: KeyColor, xCoord: number, yCoord: number) => {
-  let x, y, width, height
+const calcKeySVGValues = (color: KeyColor, xCoord: number, yCoord: number) => {
+  let rectX, rectWidth, rectHeight, textX, textY, textFontSize, textClassName
 
   if (color === WHITE_KEY_COLOR) {
-    x = xCoord * WHITE_KEY_WIDTH + KEY_PADDING
-    y = y
-    width = WHITE_KEY_WIDTH - KEY_PADDING
-    height = WHITE_KEY_HEIGHT
+    rectX = xCoord * WHITE_KEY_WIDTH + KEY_PADDING
+    rectWidth = WHITE_KEY_WIDTH - KEY_PADDING
+    rectHeight = WHITE_KEY_HEIGHT
+    textX = WHITE_KEY_WIDTH * (xCoord + WHITE_KEY_TEXT_OFFSET)
+    textY = yCoord + WHITE_KEY_HEIGHT - BASE_Y_OFFSET
+    textFontSize = WHITE_KEY_FONT_SIZE
+    textClassName = WHITE_KEY_TEXT_CLASS
   } else {
-    x = (xCoord + 1) * WHITE_KEY_WIDTH - BLACK_KEY_WIDTH / 2
-    y = yCoord
-    width = BLACK_KEY_WIDTH
-    height = BLACK_KEY_HEIGHT
+    rectX = (xCoord + 1) * WHITE_KEY_WIDTH - BLACK_KEY_WIDTH / 2
+    rectWidth = BLACK_KEY_WIDTH
+    rectHeight = BLACK_KEY_HEIGHT
+    textX = WHITE_KEY_WIDTH * (xCoord + BLACK_KEY_TEXT_OFFSET)
+    textY = yCoord + BLACK_KEY_HEIGHT - BASE_Y_OFFSET
+    textFontSize = BLACK_KEY_FONT_SIZE
+    textClassName = BLACK_KEY_TEXT_CLASS
   }
 
-  return { x, y, width, height }
-}
-
-const calcTextSVGValues = (color: KeyColor, xCoord: number, yCoord: number) => {
-  let x, y, fontSize, className
-
-  if (color === WHITE_KEY_COLOR) {
-    x = WHITE_KEY_WIDTH * (xCoord + 0.5)
-    y = yCoord + WHITE_KEY_HEIGHT - 10
-    fontSize = WHITE_KEY_FONT_SIZE
-    className = WHITE_KEY_TEXT_CLASS
-  } else {
-    xCoord = (xCoord + 1) * WHITE_KEY_WIDTH - BLACK_KEY_WIDTH / 2
-    x = xCoord + BLACK_KEY_WIDTH / 2
-    y = yCoord + BLACK_KEY_HEIGHT - 10
-    fontSize = BLACK_KEY_FONT_SIZE
-    className = BLACK_KEY_TEXT_CLASS
-  }
-
-  return { x, y, fontSize, className }
+  return { rectX, rectWidth, rectHeight, textX, textY, textFontSize, textClassName }
 }
 
 const PianoKey: React.FC<Props> = ({ x, y, note }) => {
   const color = deriveColorFromNote(note)
 
-  const textSVGValues = calcTextSVGValues(color, x, y)
-  const rectSVGValues = calcRectSVGValues(color, x, y)
+  const { rectX, rectWidth, rectHeight, textX, textY, textFontSize, textClassName } =
+    calcKeySVGValues(color, x, y)
 
   const { handleNoteClick, state } = useGame()
 
@@ -94,22 +84,21 @@ const PianoKey: React.FC<Props> = ({ x, y, note }) => {
   return (
     <g data-testid='piano-key'>
       <rect
-        x={rectSVGValues.x}
-        y={rectSVGValues.y}
-        width={rectSVGValues.width}
-        height={rectSVGValues.height}
+        x={rectX}
+        width={rectWidth}
+        height={rectHeight}
         className={getRectClassName(note)}
         rx={KEY_BORDER_RADIUS}
         onClick={() => onKeyClick(note)}
       />
       {state.showNoteNames && (
         <text
-          x={textSVGValues.x}
-          y={textSVGValues.y}
+          x={textX}
+          y={textY}
           textAnchor={TEXT_ANCHOR}
           dominantBaseline={DOMINANT_BASELINE}
-          className={textSVGValues.className}
-          fontSize={textSVGValues.fontSize}
+          className={textClassName}
+          fontSize={textFontSize}
         >
           {note.nameNoOctave}
         </text>
