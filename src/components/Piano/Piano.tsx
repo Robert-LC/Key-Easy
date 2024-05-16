@@ -21,7 +21,7 @@ const createNotes = (): Note[] => {
 }
 
 const createPianoKey = (xPosition: number, note: Note) => {
-  return <PianoKey x={xPosition} y={BASE_Y_COORD} note={note} />
+  return <PianoKey key={note.fullName} x={xPosition} y={BASE_Y_COORD} note={note} />
 }
 
 const createPanel = (yMin: number, totalWidth: number) => {

@@ -8,6 +8,8 @@ export const NUM_OF_KEYS = 12 * (END_OCTAVE - START_OCTAVE + 1)
 export const WHITE_KEY_COLOR = 'WHITE'
 export const BLACK_KEY_COLOR = 'BLACK'
 
+export const DEFAULT_VOLUME = 0.5
+
 const WHITE_KEY_WIDTH = 30
 const WHITE_KEY_HEIGHT = 95
 

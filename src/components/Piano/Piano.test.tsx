@@ -1,18 +1,15 @@
-import { fireEvent, render, screen, within } from '@testing-library/react'
+import { fireEvent, screen, within } from '@testing-library/react'
 
 import { NUM_OF_KEYS } from '@/utils/GameConstants'
-import StoreProvider from '@/app/StoreProvider'
+import { renderWithProvider } from '@/utils/ComponentTestUtils'
 
 import Piano from './Piano'
 import GameInfo from '../GameInfo'
 
-const renderWithProvider = (component: React.JSX.Element) => {
-  return render(<StoreProvider>{component}</StoreProvider>)
-}
-
-describe('Piano', () => {
-  it('renders without crashing', () => {
+describe('Piano component', () => {
+  it('renders component correctly', () => {
     renderWithProvider(<Piano />)
+    expect(screen.getByTestId('piano')).toBeInTheDocument()
   })
 
   it('renders correct number of piano keys', () => {
@@ -29,7 +26,7 @@ describe('Piano', () => {
       </>
     )
 
-    const checkbox = screen.getByLabelText('noteNamesToggle')
+    const checkbox = screen.getByLabelText('Show Note Names:')
     fireEvent.click(checkbox)
 
     const keys = screen.getAllByTestId('piano-key')

@@ -3,7 +3,7 @@ import React from 'react'
 import { Note } from '@/types/Note'
 import { playSound } from '@/services/SoundService'
 import { useGame } from '@/hooks/useGame'
-import { PIANO_SVG_CONSTANTS, WHITE_KEY_COLOR } from '@/utils/GameConstants'
+import { DEFAULT_VOLUME, PIANO_SVG_CONSTANTS, WHITE_KEY_COLOR } from '@/utils/GameConstants'
 import { KeyColor } from '@/types/Types'
 import { deriveColorFromNote } from '@/utils/NoteUtils'
 
@@ -65,11 +65,11 @@ const PianoKey: React.FC<Props> = ({ x, y, note }) => {
   const { handleNoteClick, state } = useGame()
 
   const onKeyClick = (note: Note) => {
-    playSound(note.fullName, 0.5)
+    playSound(note.fullName, DEFAULT_VOLUME)
     handleNoteClick(note)
   }
 
-  // this is seperate from calcRectSVGValues because state is used
+  // this is seperate from calcKeySVGValues because state is used
   const getRectClassName = (note: Note) => {
     switch (state.noteStatuses[note.fullName]) {
       case 'CORRECT':
@@ -84,6 +84,7 @@ const PianoKey: React.FC<Props> = ({ x, y, note }) => {
   return (
     <g data-testid='piano-key'>
       <rect
+        data-testid='piano-key-rect'
         x={rectX}
         width={rectWidth}
         height={rectHeight}
@@ -93,6 +94,7 @@ const PianoKey: React.FC<Props> = ({ x, y, note }) => {
       />
       {state.showNoteNames && (
         <text
+          data-testid='piano-key-text'
           x={textX}
           y={textY}
           textAnchor={TEXT_ANCHOR}
