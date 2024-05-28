@@ -4,7 +4,8 @@ import { GameState } from '@/types/GameState'
 import { ScaleMode } from '@/types/Types'
 
 const INTIAL_TRIES = 3
-const initialState = {
+
+export const initialState: GameState = {
   notes: [],
   scales: [],
   currentNote: undefined,
@@ -15,7 +16,7 @@ const initialState = {
   showNoteNames: true,
   triesLeft: INTIAL_TRIES,
   noteStatuses: {}
-} as GameState
+}
 
 export const game = createSlice({
   name: 'game',

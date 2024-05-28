@@ -42,10 +42,12 @@ export const useGame = () => {
   const incrementGame = () => {
     dispatch(incrementNote())
     dispatch(resetTriesLeft())
+
     if (!state.currentNote) {
       dispatch(clearNoteStatuses())
       dispatch(incrementScale())
       dispatch(incrementNote())
+
       if (!state.currentScale) {
         dispatch(setGameInProgress(false))
       }
