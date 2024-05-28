@@ -6,6 +6,7 @@ import { Scale } from '@/types/Scale'
 import { getRandomScale } from '@/utils/GameUtils'
 import { stripNumbers } from '@/utils/GeneralUtils'
 import { createNoteFromTonal } from '@/utils/NoteUtils'
+import { INITIAL_SCORE } from '@/utils/GameConstants'
 
 const DEFAULT_SCALE_AMOUNT = 5
 
@@ -28,7 +29,7 @@ export const generateInitialGameState = (): GameState => {
     isGameInProgress: true,
     mode: ScaleMode.Major,
     noteStatuses: {},
-    score: 0,
+    score: INITIAL_SCORE,
     showNoteNames: false,
     triesLeft: 3
   }
