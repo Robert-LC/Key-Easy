@@ -18,7 +18,7 @@ export const initialState: GameState = {
   noteStatuses: {}
 }
 
-export const game = createSlice({
+const gameSlice = createSlice({
   name: 'game',
   initialState,
   reducers: {
@@ -69,6 +69,6 @@ export const {
   setNoteStatus,
   toggleNoteNames,
   clearNoteStatuses
-} = game.actions
+} = gameSlice.actions
 
-export default game.reducer
+export default gameSlice.reducer

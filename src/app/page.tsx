@@ -1,15 +1,18 @@
+'use client'
+import { Provider } from 'react-redux'
+
 import GameInfo from '@/components/GameInfo'
+import { store } from '@/redux/store'
 
 import Piano from '../components/Piano/Piano'
-import StoreProvider from './StoreProvider'
 
 const Home = () => {
   return (
     <div className='m-4'>
-      <StoreProvider>
+      <Provider store={store}>
         <GameInfo />
         <Piano />
-      </StoreProvider>
+      </Provider>
     </div>
   )
 }

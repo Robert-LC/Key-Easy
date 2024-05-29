@@ -1,15 +1,20 @@
 import { configureStore } from '@reduxjs/toolkit'
 
+import { generateInitialGameState } from '@/services/GameService'
+
 import gameReducer from './features/gameSlice'
 
-export const makeStore = () => {
-  return configureStore({
-    reducer: {
-      gameReducer
-    }
-  })
+const preloadedState = {
+  game: generateInitialGameState()
 }
 
-export type AppStore = ReturnType<typeof makeStore>
+export const store = configureStore({
+  reducer: {
+    game: gameReducer
+  },
+  preloadedState
+})
+
+export type AppStore = typeof store
 export type RootState = ReturnType<AppStore['getState']>
 export type AppDispatch = AppStore['dispatch']
