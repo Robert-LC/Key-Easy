@@ -15,7 +15,7 @@ import { Note } from '@/types/Note'
 
 export const useGame = () => {
   const dispatch = useAppDispatch<AppDispatch>()
-  const state = useAppSelector((state: RootState) => state.gameReducer)
+  const state = useAppSelector((state: RootState) => state.game)
 
   const handleShowNoteNames = () => {
     dispatch(toggleNoteNames())

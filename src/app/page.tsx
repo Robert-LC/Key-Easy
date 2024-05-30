@@ -1,4 +1,5 @@
 'use client'
+import { useEffect, useState } from 'react'
 import { Provider } from 'react-redux'
 
 import GameInfo from '@/components/GameInfo'
@@ -7,12 +8,29 @@ import { store } from '@/redux/store'
 import Piano from '../components/Piano/Piano'
 
 const Home = () => {
+  const [isLoading, setIsLoading] = useState(true)
+
+  // Hack for hydration errors since state is is set by random numbers
+  useEffect(() => {
+    const timeOutForHydration = () => {
+      setTimeout(() => {
+        setIsLoading(false)
+      }, 1)
+    }
+
+    timeOutForHydration()
+  }, [])
+
   return (
     <div className='m-4'>
-      <Provider store={store}>
-        <GameInfo />
-        <Piano />
-      </Provider>
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <Provider store={store}>
+          <GameInfo />
+          <Piano />
+        </Provider>
+      )}
     </div>
   )
 }
