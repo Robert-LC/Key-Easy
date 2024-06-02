@@ -4,4 +4,5 @@ export type Note = {
   letter: string
   octave?: number
   accidental: string
+  height: number
 }

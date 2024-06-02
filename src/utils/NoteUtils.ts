@@ -9,13 +9,14 @@ import { Note } from '@/types/Note'
  * @returns The created Note object.
  */
 export const createNoteFromTonal = (noteName: string): Note => {
-  const { name: fullName, letter, oct: octave, acc: accidental } = TonalNote.get(noteName)
+  const { name: fullName, letter, height, oct: octave, acc: accidental } = TonalNote.get(noteName)
   return {
     fullName,
     nameNoOctave: letter + accidental,
     letter,
     octave,
-    accidental
+    accidental,
+    height
   }
 }
 
@@ -31,4 +32,14 @@ export const deriveColorFromNote = (
   }
 
   return BLACK_KEY_COLOR
+}
+
+// Given a note with an accidental, return its alternate name (eharmonic)
+export const getAlternateName = (note: Note): string => {
+  return TonalNote.enharmonic(note.fullName)
+}
+
+// Check if two different notes are equal, usefull for checking if one note is an eharmonic of another
+export const areNotesEharmonic = (noteA: Note, noteB: Note): boolean => {
+  return noteA.height === noteB.height
 }
