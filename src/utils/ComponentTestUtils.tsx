@@ -1,7 +1,8 @@
 import { render } from '@testing-library/react'
+import { Provider } from 'react-redux'
 
-import StoreProvider from '@/app/StoreProvider'
+import { store } from '@/redux/store'
 
 export const renderWithProvider = (component: React.JSX.Element) => {
-  return render(<StoreProvider>{component}</StoreProvider>)
+  return render(<Provider store={store}>{component}</Provider>)
 }

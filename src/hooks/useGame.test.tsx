@@ -1,13 +1,14 @@
 import React from 'react'
 import { act, renderHook } from '@testing-library/react'
+import { Provider } from 'react-redux'
 
 import { useGame } from '@/hooks/useGame'
-import StoreProvider from '@/app/StoreProvider'
 import { INITIAL_SCORE } from '@/utils/GameConstants'
+import { store } from '@/redux/store'
 
 describe('useGame', () => {
   const wrapper = ({ children }: { children: React.ReactNode }) => (
-    <StoreProvider>{children}</StoreProvider>
+    <Provider store={store}>{children}</Provider>
   )
 
   it('should return initial game state', () => {

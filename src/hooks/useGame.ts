@@ -21,8 +21,12 @@ export const useGame = () => {
     dispatch(toggleNoteNames())
   }
 
-  const handleNoteClick = (note: Note) => {
-    note.fullName === state.currentNote?.fullName ? handleCorrectNote() : handleIncorrectNote()
+  const handleNoteClick = (clickedNote: Note) => {
+    console.log(clickedNote.fullName)
+
+    clickedNote.fullName === state.currentNote?.fullName
+      ? handleCorrectNote()
+      : handleIncorrectNote()
   }
 
   const handleCorrectNote = () => {
