@@ -31,20 +31,33 @@ const gameSlice = createSlice({
     incrementScore: (state) => {
       state.score += 1
     },
-    incrementScale: (state) => {
-      state.currentScale = state.scales.pop()
-    },
     incrementNote: (state) => {
-      state.currentNote = state.notes.shift()
+      gameSlice.caseReducers.resetTriesLeft(state)
+
+      if (state.notes.length > 0) {
+        state.currentNote = state.notes.shift()
+        return
+      }
+
+      // if there are no remaining notes, check for remaining scales
+      if (state.scales.length > 0) {
+        state.currentScale = state.scales.pop()
+
+        state.notes = state.currentScale!.notes
+        state.currentNote = state.notes.shift()
+
+        gameSlice.caseReducers.clearNoteStatuses(state)
+        return
+      }
+
+      // if there are no more scales, end the game
+      state.isGameInProgress = false
     },
     initializeGame: (state, action: PayloadAction<GameState>) => {
       return action.payload
     },
     resetTriesLeft: (state) => {
       state.triesLeft = INTIAL_TRIES
-    },
-    setGameInProgress: (state, action: PayloadAction<boolean>) => {
-      state.isGameInProgress = action.payload
     },
     setNoteStatus: (
       state,
@@ -61,11 +74,9 @@ const gameSlice = createSlice({
 export const {
   decrementTriesLeft,
   incrementNote,
-  incrementScale,
   incrementScore,
   initializeGame,
   resetTriesLeft,
-  setGameInProgress,
   setNoteStatus,
   toggleNoteNames,
   clearNoteStatuses

@@ -1,11 +1,7 @@
 import {
-  clearNoteStatuses,
   decrementTriesLeft,
   incrementNote,
-  incrementScale,
   incrementScore,
-  resetTriesLeft,
-  setGameInProgress,
   setNoteStatus,
   toggleNoteNames
 } from '@/redux/features/gameSlice'
@@ -22,8 +18,6 @@ export const useGame = () => {
   }
 
   const handleNoteClick = (clickedNote: Note) => {
-    console.log(clickedNote.fullName)
-
     clickedNote.fullName === state.currentNote?.fullName
       ? handleCorrectNote()
       : handleIncorrectNote()
@@ -31,30 +25,17 @@ export const useGame = () => {
 
   const handleCorrectNote = () => {
     dispatch(setNoteStatus({ noteName: state.currentNote!.fullName, status: 'CORRECT' }))
-    incrementGame()
     dispatch(incrementScore())
+
+    dispatch(incrementNote())
   }
 
   const handleIncorrectNote = () => {
     dispatch(decrementTriesLeft())
+
     if (state.triesLeft === 1) {
       dispatch(setNoteStatus({ noteName: state.currentNote!.fullName, status: 'MISSED_CORRECT' }))
-      incrementGame()
-    }
-  }
-
-  const incrementGame = () => {
-    dispatch(incrementNote())
-    dispatch(resetTriesLeft())
-
-    if (!state.currentNote) {
-      dispatch(clearNoteStatuses())
-      dispatch(incrementScale())
       dispatch(incrementNote())
-
-      if (!state.currentScale) {
-        dispatch(setGameInProgress(false))
-      }
     }
   }
 
