@@ -8,6 +8,7 @@ import {
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { AppDispatch, RootState } from '@/redux/store'
 import { Note } from '@/types/Note'
+import { isEqualFrequency } from '@/utils/NoteUtils'
 
 export const useGame = () => {
   const dispatch = useAppDispatch<AppDispatch>()
@@ -18,13 +19,11 @@ export const useGame = () => {
   }
 
   const handleNoteClick = (clickedNote: Note) => {
-    clickedNote.fullName === state.currentNote?.fullName
-      ? handleCorrectNote()
-      : handleIncorrectNote()
+    isEqualFrequency(state.currentNote!, clickedNote) ? handleCorrectNote() : handleIncorrectNote()
   }
 
   const handleCorrectNote = () => {
-    dispatch(setNoteStatus({ noteName: state.currentNote!.fullName, status: 'CORRECT' }))
+    dispatch(setNoteStatus({ noteFrequency: state.currentNote!.frequency!, status: 'CORRECT' }))
     dispatch(incrementScore())
 
     dispatch(incrementNote())
@@ -34,7 +33,9 @@ export const useGame = () => {
     dispatch(decrementTriesLeft())
 
     if (state.triesLeft === 1) {
-      dispatch(setNoteStatus({ noteName: state.currentNote!.fullName, status: 'MISSED_CORRECT' }))
+      dispatch(
+        setNoteStatus({ noteFrequency: state.currentNote!.frequency!, status: 'MISSED_CORRECT' })
+      )
       dispatch(incrementNote())
     }
   }

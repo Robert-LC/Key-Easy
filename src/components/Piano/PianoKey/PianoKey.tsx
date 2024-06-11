@@ -71,7 +71,7 @@ const PianoKey: React.FC<Props> = ({ x, y, note }) => {
 
   // this is seperate from calcKeySVGValues because state is used
   const getRectClassName = (note: Note) => {
-    switch (state.noteStatuses[note.fullName]) {
+    switch (state.noteStatuses[note.frequency]) {
       case 'CORRECT':
         return 'green-key'
       case 'MISSED_CORRECT':

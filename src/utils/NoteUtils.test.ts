@@ -1,8 +1,8 @@
 import {
-  areNotesEharmonic,
   createNoteFromTonal,
   deriveColorFromNote,
   getAlternateName,
+  isEqualFrequency,
   stripOctave
 } from '@/utils/NoteUtils'
 import { BLACK_KEY_COLOR, WHITE_KEY_COLOR } from '@/utils/GameConstants'
@@ -92,7 +92,7 @@ describe('NoteUtils', () => {
         accidental: 'b',
         height: 60
       }
-      const areEharmonic = areNotesEharmonic(noteA, noteB)
+      const areEharmonic = isEqualFrequency(noteA, noteB)
       expect(areEharmonic).toBe(true)
     })
   })

@@ -5,3 +5,5 @@ export enum ScaleMode {
 }
 
 export type KeyColor = 'BLACK' | 'WHITE'
+
+export type NoteStatus = 'CORRECT' | 'MISSED_CORRECT'

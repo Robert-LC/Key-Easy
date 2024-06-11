@@ -4,8 +4,8 @@ import { Scale } from '@/types/Scale'
 
 import { ScaleMode } from '../types/Types'
 import { createScaleFromTonal } from './ScaleUtils'
-import { stripOctave } from './NoteUtils'
-import { ENDING_NOTE, STARTING_NOTE } from './GameConstants'
+import { createNoteRangeFromScale, stripOctave } from './NoteUtils'
+import { END_OCTAVE, ENDING_NOTE, START_OCTAVE, STARTING_NOTE } from './GameConstants'
 
 /**
  * Generates a random scale based on the given mode
@@ -16,6 +16,8 @@ export const getRandomScale = (mode: ScaleMode): Scale => {
   const scale = createScaleFromTonal(
     `${getRandomNoteName()} ${mode === ScaleMode.Both ? getRandomMode() : mode.toLowerCase()}`
   )
+
+  scale.notes = createNoteRangeFromScale(scale, START_OCTAVE, END_OCTAVE)
 
   return scale
 }
