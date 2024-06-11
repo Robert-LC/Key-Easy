@@ -48,7 +48,7 @@ const gameSlice = createSlice({
     },
     setNoteStatus: (
       state,
-      action: PayloadAction<{ noteName: string; status: 'CORRECT' | 'MISSED_CORRECT' | 'NONE' }>
+      action: PayloadAction<{ noteName: string; status: 'CORRECT' | 'MISSED_CORRECT' }>
     ) => {
       state.noteStatuses[action.payload.noteName] = action.payload.status
     },

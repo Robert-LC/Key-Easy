@@ -12,5 +12,5 @@ export interface GameState {
   score: number
   showNoteNames: boolean
   triesLeft: number
-  noteStatuses: Record<string, 'CORRECT' | 'MISSED_CORRECT' | 'NONE'>
+  noteStatuses: Record<string, 'CORRECT' | 'MISSED_CORRECT'>
 }
