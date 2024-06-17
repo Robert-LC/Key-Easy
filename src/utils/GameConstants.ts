@@ -11,6 +11,7 @@ export const BLACK_KEY_COLOR = 'BLACK'
 export const DEFAULT_VOLUME = 0.5
 
 export const INITIAL_SCORE = 0
+export const DEFAULT_SCALE_AMOUNT = 5
 
 const WHITE_KEY_WIDTH = 30
 const WHITE_KEY_HEIGHT = 95
