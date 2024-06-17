@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { GameState } from '@/types/GameState'
 import { ScaleMode } from '@/types/Types'
+import { generateInitialGameState } from '@/services/GameService'
 
 const INTIAL_TRIES = 3
 
@@ -50,8 +51,8 @@ const gameSlice = createSlice({
         return
       }
 
-      // if there are no more scales, end the game
-      state.isGameInProgress = false
+      // if there are no remaining scales, end the game
+      gameSlice.caseReducers.setGameOver(state)
     },
     initializeGame: (state, action: PayloadAction<GameState>) => {
       return action.payload
@@ -67,6 +68,14 @@ const gameSlice = createSlice({
     },
     clearNoteStatuses: (state) => {
       state.noteStatuses = {}
+    },
+    setGameOver: (state) => {
+      state.isGameInProgress = false
+      gameSlice.caseReducers.clearNoteStatuses(state)
+    },
+    resetGame: (state) => {
+      const newState = generateInitialGameState()
+      Object.assign(state, { ...newState })
     }
   }
 })
@@ -76,6 +85,7 @@ export const {
   incrementNote,
   incrementScore,
   initializeGame,
+  resetGame,
   resetTriesLeft,
   setNoteStatus,
   toggleNoteNames,

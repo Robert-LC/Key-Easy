@@ -2,9 +2,7 @@ import { ScaleMode } from '@/types/Types'
 import { GameState } from '@/types/GameState'
 import { Scale } from '@/types/Scale'
 import { getRandomScale } from '@/utils/GameUtils'
-import { INITIAL_SCORE } from '@/utils/GameConstants'
-
-const DEFAULT_SCALE_AMOUNT = 5
+import { DEFAULT_SCALE_AMOUNT, INITIAL_SCORE } from '@/utils/GameConstants'
 
 export const generateInitialGameState = (): GameState => {
   const scales = createScalesStack(ScaleMode.Major, DEFAULT_SCALE_AMOUNT)

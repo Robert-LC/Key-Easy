@@ -2,6 +2,7 @@ import {
   decrementTriesLeft,
   incrementNote,
   incrementScore,
+  resetGame,
   setNoteStatus,
   toggleNoteNames
 } from '@/redux/features/gameSlice'
@@ -40,5 +41,9 @@ export const useGame = () => {
     }
   }
 
-  return { handleNoteClick, handleShowNoteNames, state }
+  const handleResetGame = () => {
+    dispatch(resetGame())
+  }
+
+  return { handleNoteClick, handleShowNoteNames, handleResetGame, state }
 }
