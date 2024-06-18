@@ -73,9 +73,9 @@ const PianoKey: React.FC<Props> = ({ x, y, note }) => {
   const getRectClassName = (note: Note) => {
     switch (state.noteStatuses[note.frequency]) {
       case 'CORRECT':
-        return 'green-key'
+        return note.accidental ? 'green-key-flat' : 'green-key'
       case 'MISSED_CORRECT':
-        return 'orange-key'
+        return note.accidental ? 'orange-key-flat' : 'orange-key'
       default:
         return note.accidental ? 'black-key' : 'white-key'
     }
