@@ -54,9 +54,6 @@ const gameSlice = createSlice({
       // if there are no remaining scales, end the game
       gameSlice.caseReducers.setGameOver(state)
     },
-    initializeGame: (state, action: PayloadAction<GameState>) => {
-      return action.payload
-    },
     resetTriesLeft: (state) => {
       state.triesLeft = INTIAL_TRIES
     },
@@ -71,7 +68,6 @@ const gameSlice = createSlice({
     },
     setGameOver: (state) => {
       state.isGameInProgress = false
-      gameSlice.caseReducers.clearNoteStatuses(state)
     },
     resetGame: (state) => {
       const newState = generateInitialGameState()
@@ -84,7 +80,6 @@ export const {
   decrementTriesLeft,
   incrementNote,
   incrementScore,
-  initializeGame,
   resetGame,
   resetTriesLeft,
   setNoteStatus,

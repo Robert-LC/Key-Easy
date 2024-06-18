@@ -16,14 +16,14 @@ const GameInfo = () => {
     }
 
     if (notes.length === MAX_NOTES) {
-      return numberSuffix(1)
+      return calculateNumberSuffix(1)
     }
 
     // Subtract the number of notes from the max number of notes + 1 to get the position
-    return numberSuffix(MAX_NOTES - notes.length)
+    return calculateNumberSuffix(MAX_NOTES - notes.length)
   }
 
-  const numberSuffix = (number: number): string => {
+  const calculateNumberSuffix = (number: number): string => {
     switch (number) {
       case 1:
         return '1st'
@@ -36,6 +36,10 @@ const GameInfo = () => {
     }
   }
 
+  const calculateMaxScore = (): number => {
+    return MAX_NOTES * (state.scales.length + 1)
+  }
+
   return (
     <div>
       <div
@@ -46,7 +50,9 @@ const GameInfo = () => {
           <span className='text-white text-3xl font-bold'>
             Current Scale: <span className='text-orange-400'>{currentScale?.name}</span>
           </span>
-          <p className='text-white text-3xl font-bold'>Score: {state.score}</p>
+          <p className='text-white text-3xl font-bold'>
+            Score: {state.score}/{calculateMaxScore()}
+          </p>
         </div>
 
         <div className='space-y-4'>

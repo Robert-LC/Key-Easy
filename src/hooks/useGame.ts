@@ -7,19 +7,21 @@ import {
   toggleNoteNames
 } from '@/redux/features/gameSlice'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { AppDispatch, RootState } from '@/redux/store'
+import { AppDispatch } from '@/redux/store'
+import { GameState } from '@/types/GameState'
 import { Note } from '@/types/Note'
 import { isEqualFrequency } from '@/utils/NoteUtils'
 
 export const useGame = () => {
   const dispatch = useAppDispatch<AppDispatch>()
-  const state = useAppSelector((state: RootState) => state.game)
+  const state = useAppSelector((state: { game: GameState }) => state.game)
 
   const handleShowNoteNames = () => {
     dispatch(toggleNoteNames())
   }
 
   const handleNoteClick = (clickedNote: Note) => {
+    if (!state.isGameInProgress) return
     isEqualFrequency(state.currentNote!, clickedNote) ? handleCorrectNote() : handleIncorrectNote()
   }
 
