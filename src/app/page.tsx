@@ -2,9 +2,9 @@
 import { useEffect, useState } from 'react'
 import { Provider } from 'react-redux'
 
-import GameInfo from '@/components/GameInfo'
 import { store } from '@/redux/store'
 import GameOverModal from '@/components/GameOverModal/GameOverModal'
+import GameInfo from '@/components/GameInfo/GameInfo'
 
 import Piano from '../components/Piano/Piano'
 

@@ -1,11 +1,11 @@
 import { screen, waitFor } from '@testing-library/react'
 
-import { renderWithProvider } from '@/utils/ComponentTestUtils'
+import { renderWithReduxProvider } from '@/utils/ComponentTestUtils'
 import Home from '@/app/page'
 
 describe('Home', () => {
   it('should render the Piano', async () => {
-    renderWithProvider(<Home />)
+    renderWithReduxProvider(<Home />)
     //wait for the component to render
 
     await waitFor(() => {
@@ -15,7 +15,7 @@ describe('Home', () => {
   })
 
   it('should render the GameInfo', async () => {
-    renderWithProvider(<Home />)
+    renderWithReduxProvider(<Home />)
 
     await waitFor(() => {
       const gameInfo = screen.getByText('Current Scale:')

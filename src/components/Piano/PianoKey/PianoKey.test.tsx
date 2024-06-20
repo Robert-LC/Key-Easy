@@ -4,7 +4,7 @@ import { fireEvent, screen } from '@testing-library/react'
 import PianoKey from '@/components/Piano/PianoKey/PianoKey'
 import { playSound } from '@/services/SoundService'
 import { Note } from '@/types/Note'
-import { renderWithProvider } from '@/utils/ComponentTestUtils'
+import { renderWithReduxProvider } from '@/utils/ComponentTestUtils'
 import { useGame } from '@/hooks/useGame'
 import { ScaleMode } from '@/types/Types'
 import { DEFAULT_VOLUME } from '@/utils/GameConstants'
@@ -19,7 +19,7 @@ const mockUseGame = useGame as jest.MockedFunction<typeof useGame>
 
 describe('PianoKey component', () => {
   const naturalNote = createNoteFromTonal('C4')
-  const accidentalNote = createNoteFromTonal('C#4')
+  const accidentalNote = createNoteFromTonal('Ab4')
   const correctNote = createNoteFromTonal('B4')
   const missedCorrectNote = createNoteFromTonal('D4')
 
@@ -27,6 +27,7 @@ describe('PianoKey component', () => {
     mockUseGame.mockReturnValue({
       handleNoteClick: jest.fn(),
       handleShowNoteNames: jest.fn(),
+      handleResetGame: jest.fn(),
       state: {
         notes: [],
         scales: [],
@@ -36,8 +37,8 @@ describe('PianoKey component', () => {
         score: 0,
         triesLeft: 3,
         noteStatuses: {
-          [correctNote.fullName]: 'CORRECT',
-          [missedCorrectNote.fullName]: 'MISSED_CORRECT'
+          [correctNote.frequency]: 'CORRECT',
+          [missedCorrectNote.frequency]: 'MISSED_CORRECT'
         }
       }
     })
@@ -86,7 +87,7 @@ describe('PianoKey component', () => {
 
 // Wraps PianoKey in SVG for testing, as it's not a child of the SVG wrapped Piano Component in this test
 const renderKey = (note: Note) => {
-  return renderWithProvider(
+  return renderWithReduxProvider(
     <svg>
       <PianoKey x={0} y={0} note={note} />
     </svg>
