@@ -2,11 +2,11 @@ import React from 'react'
 
 import { useGame } from '@/hooks/useGame'
 
-interface props {
+type Props = {
   onPlayAgain: () => void
 }
 
-const PlayAgainButton = ({ onPlayAgain }: props) => {
+const PlayAgainButton = ({ onPlayAgain }: Props) => {
   const { handleResetGame } = useGame()
 
   const handleClick = () => {
