@@ -3,7 +3,7 @@
 A new way to learn your scales on piano, but make it a game! Compete with your friends
 and its cheaper too. No physical piano needed!
 
-![Key Easy in Action](https://github.com/Robert-LC/KeyEasy/assets/72999492/43b81200-0ad8-4f03-8e1d-badf4c94352f)
+![Key Easy in Action](https://github.com/user-attachments/assets/bdf6c56a-851c-4ae4-aa06-abd4d3f6a480)
 
 # Motivation 🫡
 
