@@ -1,6 +1,8 @@
 import React from 'react'
 import Modal from 'react-modal'
 
+import ScaleModeToggle from './ScaleModeToggle'
+
 type Props = {
   isOpen: boolean
   toggleModal: () => void
@@ -19,6 +21,9 @@ const GameSettingsModal = ({ isOpen, toggleModal }: Props) => {
     >
       <div className='flex flex-col justify-between h-full w-full'>
         <h1 className='text-white text-5xl text-center'>Game Settings</h1>
+        <div>
+          <ScaleModeToggle />
+        </div>
         <div className='flex justify-around'>
           <button onClick={toggleModal} className='mt-2 bg-red-500 text-white rounded px-4 py-2'>
             Close
