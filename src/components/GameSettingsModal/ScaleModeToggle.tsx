@@ -24,7 +24,7 @@ const ScaleModeToggle = () => {
   }
 
   return (
-    <>
+    <div className='flex flex-col gap-4'>
       <h1>Scale Mode</h1>
       <div className='flex items-center justify-center space-x-2 border border-purple-500 rounded shadow-sm w-60 h-14'>
         <div className={`text-purple-700`}>
@@ -38,7 +38,7 @@ const ScaleModeToggle = () => {
             className='hidden'
           />
           <label
-            className='left-label'
+            className='left-label cursor-pointer'
             htmlFor='left'
             onClick={() => handleOptionChange(ScaleMode.Major)}
           >
@@ -56,7 +56,7 @@ const ScaleModeToggle = () => {
             className='hidden'
           />
           <label
-            className='center-label'
+            className='center-label cursor-pointer'
             htmlFor='center'
             onClick={() => handleOptionChange(ScaleMode.Both)}
           >
@@ -74,7 +74,7 @@ const ScaleModeToggle = () => {
             className='hidden'
           />
           <label
-            className='right-label'
+            className='right-label cursor-pointer'
             htmlFor='right'
             onClick={() => handleOptionChange(ScaleMode.Minor)}
           >
@@ -84,27 +84,7 @@ const ScaleModeToggle = () => {
       </div>
 
       <div>Selected Option: {switchPosition}</div>
-    </>
+    </div>
   )
 }
-
-// const [animation, setAnimation] = useState(null)
-
-// const getSwitchAnimation = (value: ScaleMode) => {
-//   let newAnimation = null
-//   switch (value) {
-//     case ScaleMode.Both:
-//       newAnimation = switchPosition === Position.Left ? 'left-to-center' : 'right-to-center'
-//       break
-//     case ScaleMode.Minor:
-//       newAnimation = switchPosition === Position.Center ? 'center-to-right' : 'left-to-right'
-//       break
-//     case ScaleMode.Major:
-//       newAnimation = switchPosition === Position.Center ? 'center-to-left' : 'right-to-left'
-//       break
-//   }
-
-//   setSwitchPosition(ScaleModeToPosition[value])
-//   setAnimation(newAnimation)
-// }
 export default ScaleModeToggle

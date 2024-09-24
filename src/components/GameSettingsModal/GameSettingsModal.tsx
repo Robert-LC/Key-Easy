@@ -2,6 +2,7 @@ import React from 'react'
 import Modal from 'react-modal'
 
 import ScaleModeToggle from './ScaleModeToggle'
+import NumberOfTriesInput from './NumberOfTriesInput'
 
 type Props = {
   isOpen: boolean
@@ -17,12 +18,13 @@ const GameSettingsModal = ({ isOpen, toggleModal }: Props) => {
       shouldCloseOnEsc={false}
       contentLabel='Game Settings Popup'
       className='bg-menu-blue rounded-2xl w-1/2 h-1/2 focus:outline-none p-20 flex items-center justify-center'
-      overlayClassName='fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center'
+      overlayClassName='fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center'
     >
       <div className='flex flex-col justify-between h-full w-full'>
         <h1 className='text-white text-5xl text-center'>Game Settings</h1>
-        <div>
+        <div className='flex justify-between'>
           <ScaleModeToggle />
+          <NumberOfTriesInput />
         </div>
         <div className='flex justify-around'>
           <button onClick={toggleModal} className='mt-2 bg-red-500 text-white rounded px-4 py-2'>
