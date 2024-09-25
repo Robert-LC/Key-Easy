@@ -95,7 +95,11 @@ const GameInfo = () => {
               />
             </div>
             <div className='inline-flex space-x-5'>
-              <p className='text-white text-4xl font-bold'>Tries Left: {state.triesLeft}</p>
+              <p
+                className={`text-4xl font-bold ${state.triesLeft === 1 ? 'text-red-500' : 'text-white'}`}
+              >
+                Tries Left: {state.triesLeft}
+              </p>
               <p className='text-white text-4xl font-bold'>
                 Scales Left: {calculateScalesLeft(state.scales)}
               </p>
