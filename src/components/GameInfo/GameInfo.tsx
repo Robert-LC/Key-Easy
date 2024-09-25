@@ -5,6 +5,7 @@ import { faGear } from '@fortawesome/free-solid-svg-icons'
 
 import { Note } from '@/types/Note'
 import { useGame } from '@/hooks/useGame'
+import { Scale } from '@/types/Scale'
 
 import GameSettingsModal from '../GameSettingsModal/GameSettingsModal'
 
@@ -31,6 +32,14 @@ const GameInfo = () => {
 
     // Subtract the number of notes from the max number of notes + 1 to get the position
     return calculateNumberSuffix(MAX_NOTES - notes.length)
+  }
+
+  const calculateScalesLeft = (scales?: Scale[]) => {
+    if (!scales) {
+      return ''
+    }
+    console.log(scales)
+    return scales.length + 1 // Add 1 because the current scale is not in the scales array
   }
 
   const calculateNumberSuffix = (number: number): string => {
@@ -73,7 +82,7 @@ const GameInfo = () => {
               Score: {state.score}/{calculateMaxScore()}
             </p>
           </div>
-          <div className='space-y-5'>
+          <div className='flex flex-col space-y-5'>
             <div className='inline-flex'>
               <label htmlFor='noteNamesToggle' className='text-white font-bold text-4xl'>
                 Show Note Names:
@@ -85,7 +94,12 @@ const GameInfo = () => {
                 onChange={handleShowNoteNames}
               />
             </div>
-            <p className='text-white text-4xl font-bold'>Tries Left: {state.triesLeft}</p>
+            <div className='inline-flex space-x-5'>
+              <p className='text-white text-4xl font-bold'>Tries Left: {state.triesLeft}</p>
+              <p className='text-white text-4xl font-bold'>
+                Scales Left: {calculateScalesLeft(state.scales)}
+              </p>
+            </div>
           </div>
         </div>
       </div>
