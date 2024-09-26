@@ -2,19 +2,32 @@ import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useState } from 'react'
 
-const NumberOfTriesInput = () => {
-  const defaultTries = 3
+type Props = {
+  onTriesChange: (tries: number) => void
+  value: number
+}
+
+const NumberOfTriesInput = ({ onTriesChange, value }: Props) => {
   const maxTries = 7
   const minTries = 1
 
-  const [tries, setTries] = useState(defaultTries)
+  const [tries, setTries] = useState(value)
 
   const handleIncrement = () => {
-    setTries((prevTries) => Math.min(prevTries + 1, maxTries))
+    // Call parent setter and return scale Mode in this setter to sync parent and child states
+    setTries((prevTries) => {
+      const newTries = Math.min(prevTries + 1, maxTries)
+      onTriesChange(newTries)
+      return newTries
+    })
   }
 
   const handleDecrement = () => {
-    setTries((prevTries) => Math.max(prevTries - 1, minTries))
+    setTries((prevTries) => {
+      const newTries = Math.max(prevTries - 1, minTries)
+      onTriesChange(newTries)
+      return newTries
+    })
   }
 
   return (

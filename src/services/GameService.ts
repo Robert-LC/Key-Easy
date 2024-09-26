@@ -2,10 +2,10 @@ import { ScaleMode } from '@/types/Types'
 import { GameState } from '@/types/GameState'
 import { Scale } from '@/types/Scale'
 import { getRandomScale } from '@/utils/GameUtils'
-import { DEFAULT_SCALE_AMOUNT, INITIAL_SCORE } from '@/utils/GameConstants'
+import { DEFAULT_SCALE_AMOUNT, DEFAULT_TRIES_AMOUNT, INITIAL_SCORE } from '@/utils/GameConstants'
 
-export const generateInitialGameState = (): GameState => {
-  const scales = createScalesStack(ScaleMode.Major, DEFAULT_SCALE_AMOUNT)
+export const generateInitialGameState = (mode: ScaleMode = ScaleMode.Major): GameState => {
+  const scales = createScalesStack(mode, DEFAULT_SCALE_AMOUNT)
   const currentScale = scales.pop()
   const notes = currentScale!.notes
   const currentNote = notes.shift()
@@ -20,7 +20,8 @@ export const generateInitialGameState = (): GameState => {
     noteStatuses: {},
     score: INITIAL_SCORE,
     showNoteNames: false,
-    triesLeft: 3
+    triesRemaining: DEFAULT_TRIES_AMOUNT,
+    triesPerNote: DEFAULT_TRIES_AMOUNT
   }
 }
 

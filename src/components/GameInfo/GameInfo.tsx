@@ -38,7 +38,7 @@ const GameInfo = () => {
     if (!scales) {
       return ''
     }
-    console.log(scales)
+
     return scales.length + 1 // Add 1 because the current scale is not in the scales array
   }
 
@@ -96,9 +96,9 @@ const GameInfo = () => {
             </div>
             <div className='inline-flex space-x-5'>
               <p
-                className={`text-4xl font-bold ${state.triesLeft === 1 ? 'text-red-500' : 'text-white'}`}
+                className={`text-4xl font-bold ${state.triesRemaining === 1 ? 'text-red-500' : 'text-white'}`}
               >
-                Tries Left: {state.triesLeft}
+                Tries Left: {state.triesRemaining}
               </p>
               <p className='text-white text-4xl font-bold'>
                 Scales Left: {calculateScalesLeft(state.scales)}

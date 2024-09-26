@@ -4,6 +4,8 @@ import {
   incrementScore,
   resetGame,
   setNoteStatus,
+  setScaleMode,
+  setTriesPerNote,
   toggleNoteNames
 } from '@/redux/features/gameSlice'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
@@ -35,17 +37,32 @@ export const useGame = () => {
   const handleIncorrectNote = () => {
     dispatch(decrementTriesLeft())
 
-    if (state.triesLeft === 1) {
+    if (state.triesRemaining === 1) {
       dispatch(
         setNoteStatus({ noteFrequency: state.currentNote!.frequency!, status: 'MISSED_CORRECT' })
       )
+
       dispatch(incrementNote())
     }
   }
 
   const handleResetGame = () => {
-    dispatch(resetGame())
+    const emptyOptions: Partial<GameState> = {}
+    dispatch(resetGame(emptyOptions))
   }
 
-  return { handleNoteClick, handleShowNoteNames, handleResetGame, state }
+  //have it on save just take everything in the settings, update those fields and reset entire game
+  const handleUpdateSettings = (newSettings: Partial<GameState>) => {
+    if (newSettings.triesPerNote) {
+      dispatch(setTriesPerNote(newSettings.triesPerNote))
+    }
+
+    if (newSettings.mode) {
+      dispatch(setScaleMode(newSettings.mode))
+    }
+
+    dispatch(resetGame(newSettings))
+  }
+
+  return { handleNoteClick, handleShowNoteNames, handleResetGame, handleUpdateSettings, state }
 }

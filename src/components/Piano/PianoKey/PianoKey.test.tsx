@@ -35,7 +35,7 @@ describe('PianoKey component', () => {
         mode: ScaleMode.Major,
         showNoteNames: true,
         score: 0,
-        triesLeft: 3,
+        triesRemaining: 3,
         noteStatuses: {
           [correctNote.frequency]: 'CORRECT',
           [missedCorrectNote.frequency]: 'MISSED_CORRECT'

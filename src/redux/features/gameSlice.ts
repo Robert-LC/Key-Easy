@@ -3,8 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { GameState } from '@/types/GameState'
 import { ScaleMode } from '@/types/Types'
 import { generateInitialGameState } from '@/services/GameService'
-
-const INTIAL_TRIES = 3
+import { DEFAULT_TRIES_AMOUNT } from '@/utils/GameConstants'
 
 export const initialState: GameState = {
   notes: [],
@@ -15,7 +14,8 @@ export const initialState: GameState = {
   mode: ScaleMode.Major,
   score: 0,
   showNoteNames: true,
-  triesLeft: INTIAL_TRIES,
+  triesRemaining: DEFAULT_TRIES_AMOUNT,
+  triesPerNote: DEFAULT_TRIES_AMOUNT,
   noteStatuses: {}
 }
 
@@ -27,13 +27,13 @@ const gameSlice = createSlice({
       state.showNoteNames = !state.showNoteNames
     },
     decrementTriesLeft: (state) => {
-      state.triesLeft -= 1
+      state.triesRemaining--
     },
     incrementScore: (state) => {
-      state.score += 1
+      state.score++
     },
     incrementNote: (state) => {
-      gameSlice.caseReducers.resetTriesLeft(state)
+      gameSlice.caseReducers.resetTriesRemaining(state)
 
       if (state.notes.length > 0) {
         state.currentNote = state.notes.shift()
@@ -54,8 +54,14 @@ const gameSlice = createSlice({
       // if there are no remaining scales, end the game
       gameSlice.caseReducers.setGameOver(state)
     },
-    resetTriesLeft: (state) => {
-      state.triesLeft = INTIAL_TRIES
+    resetTriesRemaining: (state) => {
+      state.triesRemaining = state.triesPerNote
+    },
+    setTriesPerNote: (state, action: PayloadAction<number>) => {
+      state.triesPerNote = action.payload
+    },
+    setScaleMode: (state, action: PayloadAction<ScaleMode>) => {
+      state.mode = action.payload
     },
     setNoteStatus: (
       state,
@@ -69,8 +75,11 @@ const gameSlice = createSlice({
     setGameOver: (state) => {
       state.isGameInProgress = false
     },
-    resetGame: (state) => {
-      const newState = generateInitialGameState()
+    resetGame: (state, action: PayloadAction<Partial<GameState>>) => {
+      console.log(action.payload.mode)
+      const newState = generateInitialGameState(action.payload.mode)
+      newState.triesPerNote = action.payload.triesPerNote as number
+      newState.triesRemaining = state.triesPerNote
       Object.assign(state, { ...newState })
     }
   }
@@ -81,7 +90,9 @@ export const {
   incrementNote,
   incrementScore,
   resetGame,
-  resetTriesLeft,
+  resetTriesRemaining,
+  setTriesPerNote,
+  setScaleMode,
   setNoteStatus,
   toggleNoteNames,
   clearNoteStatuses

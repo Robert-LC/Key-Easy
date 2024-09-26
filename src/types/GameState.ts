@@ -11,6 +11,9 @@ export interface GameState {
   mode: ScaleMode
   score: number
   showNoteNames: boolean
-  triesLeft: number
+  // Tries left before moved to next note
+  triesRemaining: number
+  // Tries you get per note
+  triesPerNote: number
   noteStatuses: Record<string, 'CORRECT' | 'MISSED_CORRECT'>
 }

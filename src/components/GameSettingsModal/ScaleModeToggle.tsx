@@ -2,7 +2,12 @@ import React, { useState } from 'react'
 
 import { ScaleMode } from '@/types/Types'
 
-const ScaleModeToggle = () => {
+type Props = {
+  onScaleChange: (mode: ScaleMode) => void
+  value: null | ScaleMode
+}
+
+const ScaleModeToggle = ({ onScaleChange, value }: Props) => {
   const labels = {
     left: {
       title: 'Major',
@@ -18,9 +23,14 @@ const ScaleModeToggle = () => {
     }
   }
 
-  const [switchPosition, setSwitchPosition] = useState<ScaleMode | null>(ScaleMode.Major)
+  const [scaleMode, setScaleMode] = useState<ScaleMode | null>(value)
+
   const handleOptionChange = (scaleMode: ScaleMode) => {
-    setSwitchPosition(scaleMode)
+    // Call parent setter and return scale Mode in this setter to sync parent and child states
+    setScaleMode(() => {
+      onScaleChange(scaleMode)
+      return scaleMode
+    })
   }
 
   return (
@@ -34,7 +44,6 @@ const ScaleModeToggle = () => {
             id='left'
             type='radio'
             value='left'
-            onChange={() => handleOptionChange(ScaleMode.Major)}
             className='hidden'
           />
           <label
@@ -47,14 +56,7 @@ const ScaleModeToggle = () => {
         </div>
 
         <div className='text-purple-700'>
-          <input
-            name='map-switch'
-            id='center'
-            type='radio'
-            value='center'
-            onChange={() => handleOptionChange(ScaleMode.Both)}
-            className='hidden'
-          />
+          <input name='map-switch' id='center' type='radio' value='center' className='hidden' />
           <label
             className='center-label cursor-pointer'
             htmlFor='center'
@@ -65,14 +67,7 @@ const ScaleModeToggle = () => {
         </div>
 
         <div className='text-purple-700'>
-          <input
-            name='map-switch'
-            id='right'
-            type='radio'
-            value='right'
-            onChange={() => handleOptionChange(ScaleMode.Minor)}
-            className='hidden'
-          />
+          <input name='map-switch' id='right' type='radio' value='right' className='hidden' />
           <label
             className='right-label cursor-pointer'
             htmlFor='right'
@@ -83,7 +78,7 @@ const ScaleModeToggle = () => {
         </div>
       </div>
 
-      <div>Selected Option: {switchPosition}</div>
+      <div>Selected Option: {scaleMode}</div>
     </div>
   )
 }
