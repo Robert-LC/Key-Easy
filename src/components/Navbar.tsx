@@ -26,9 +26,6 @@ const Navbar = () => {
             <Link href='/profile' className='white_btn'>
               Profile
             </Link>
-            <Link href='/settings' className='white_btn'>
-              Settings
-            </Link>
           </div>
           <button type='button' className='white_btn'>
             Sign Out

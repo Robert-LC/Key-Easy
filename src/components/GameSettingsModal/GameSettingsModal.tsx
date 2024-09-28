@@ -26,6 +26,7 @@ const GameSettingsModal = ({ isOpen, toggleModal }: Props) => {
 
   return (
     <Modal
+      appElement={document.getElementById('app') as HTMLElement}
       isOpen={isOpen}
       onRequestClose={toggleModal}
       shouldCloseOnOverlayClick={false}

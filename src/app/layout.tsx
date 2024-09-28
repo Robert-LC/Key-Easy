@@ -18,7 +18,7 @@ const RootLayout = ({
   children: React.ReactNode
 }>) => {
   return (
-    <html className='h-screen' lang='en'>
+    <html id='app' className='h-screen' lang='en'>
       <body className={(inter.className, 'flex flex-col h-full')}>
         <Navbar />
         <main className='flex flex-col h-full justify-center'>{children}</main>
