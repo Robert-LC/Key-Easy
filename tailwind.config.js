@@ -9,7 +9,7 @@ module.exports = {
       },
       colors: {
         'menu-blue': '#16252e',
-        'menu-blue-modal': '1c4159'
+        'menu-blue-modal': '#1c4159'
       }
     }
   },

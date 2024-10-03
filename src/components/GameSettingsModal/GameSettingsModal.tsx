@@ -32,7 +32,7 @@ const GameSettingsModal = ({ isOpen, toggleModal }: Props) => {
       shouldCloseOnOverlayClick={false}
       shouldCloseOnEsc={false}
       contentLabel='Game Settings Popup'
-      className='bg-menu-blue rounded-2xl w-1/2 h-1/2 focus:outline-none p-16 flex items-center justify-center'
+      className='bg-menu-blue rounded-2xl w-1/2 h-1/2 focus:outline-none p-20 flex items-center justify-center drop-shadow-md'
       overlayClassName='fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center'
     >
       <div className='flex flex-col justify-between h-full w-full gap-y-2'>
@@ -40,7 +40,7 @@ const GameSettingsModal = ({ isOpen, toggleModal }: Props) => {
         <em className='text-white text-lg text-center'>
           Saving new settings will restart the current game
         </em>
-        <div className='flex justify-between'>
+        <div className='flex justify-between p-8'>
           <ScaleModeToggle onScaleChange={setMode} value={state.mode} />
           <NumberOfTriesInput onTriesChange={setTriesPerNote} value={state.triesPerNote} />
         </div>
