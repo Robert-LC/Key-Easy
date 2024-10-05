@@ -13,7 +13,7 @@ A web app that has you click through the scale in the right order, offering visu
 
 # Quick Start 🚀
 
-Try it [here!](https://key-easy.netlify.app/)
+Try it [here!](https://keyeasy.netlify.app)
 
 # Technologies and Packages Used
 
